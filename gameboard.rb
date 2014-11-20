@@ -30,15 +30,8 @@ class GameBoard
 	end
 	
 	def has_winner
-		if @num_pieces < 5
-			return false
-		end
-
-		if has_vertical_winner || has_horizontal_winner || has_diagonal_winner
-			return true
-		else
-			return false
-		end	
+		return false if @num_pieces < 5
+		has_vertical_winner || has_horizontal_winner || has_diagonal_winner
 	end
 
 	def has_vertical_winner
@@ -47,7 +40,7 @@ class GameBoard
 				return true
 			end
 		end
-		return false
+		false
 	end
 
 	def has_horizontal_winner
@@ -59,15 +52,11 @@ class GameBoard
 				num += 3;
 			end
 		end
-		return false
+		false
 	end
 
 	def has_diagonal_winner
-		if (((@board[0] == @board[4]) && (@board[0] == @board[8])) || ((@board[2] == @board[4]) && (@board[2] == @board[6])))
-			return true
-		else
-			return false
-		end
+		(((@board[0] == @board[4]) && (@board[0] == @board[8])) || ((@board[2] == @board[4]) && (@board[2] == @board[6])))
 	end
 
 	# Print current board

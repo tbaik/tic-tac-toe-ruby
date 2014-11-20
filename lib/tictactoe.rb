@@ -1,4 +1,4 @@
-require "./gameboard"
+require "./lib/gameboard"
 
 # Compute and compare which move will give us the best score.
 def best_move(game_board)
@@ -84,7 +84,7 @@ while(!has_winner && gb.num_pieces < 9)
 			puts "Here's the Game Board. Please type an empty piece location (1-9) to place a piece."
 			piece_location = gets
 			if gb.is_valid_move?(piece_location)
-				gb.place_piece(piece_location.to_i - 1, PLAYER) # make a move
+				gb.place_piece(piece_location.to_i, PLAYER) # make a move
 				puts "Player places " + PLAYER + " on " + piece_location
 				player_turn = false # Now it's the computer's turn
 				break;
@@ -96,7 +96,7 @@ while(!has_winner && gb.num_pieces < 9)
 		# Computer does minimax algorithm, chooses best move or piece location.
 		piece_location = best_move(gb)
 		gb.place_piece(piece_location, COMPUTER)
-		puts "Computer places " + COMPUTER + " on " + (piece_location + 1).to_s
+		puts "Computer places " + COMPUTER + " on " + (piece_location).to_s
 		player_turn = true # Now it's the player's turn
 	end
 	gb.print_board

@@ -5,7 +5,7 @@ class GameBoard
 		@board = []
 		@is_player_turn = is_player_turn
 		@num_pieces = 0
-		@valid_moves = [0,1,2,3,4,5,6,7,8]
+		@valid_moves = [1,2,3,4,5,6,7,8,9]
 		9.times do |i| 
 			@board[i] = (i + 1).to_s
 		end
@@ -19,26 +19,19 @@ class GameBoard
 
 	# Place a piece on the board / Make a move
 	def place_piece(location, who) # int index , string for "O" or "X" 
-		@board[location] = who
+		@board[location - 1] = who
 		@num_pieces += 1
 		@valid_moves.delete(location)
 		@is_player_turn = !@is_player_turn
 	end
 
 	def is_valid_move?(move)
-		@valid_moves.include?(move.to_i - 1)
+		@valid_moves.include?(move.to_i)
 	end
 	
 	def has_winner
-		if @num_pieces < 5
-			return false
-		end
-
-		if has_vertical_winner || has_horizontal_winner || has_diagonal_winner
-			return true
-		else
-			return false
-		end	
+		return false if @num_pieces < 5
+		has_vertical_winner || has_horizontal_winner || has_diagonal_winner
 	end
 
 	def has_vertical_winner
@@ -47,7 +40,7 @@ class GameBoard
 				return true
 			end
 		end
-		return false
+		false
 	end
 
 	def has_horizontal_winner
@@ -59,15 +52,11 @@ class GameBoard
 				num += 3;
 			end
 		end
-		return false
+		false
 	end
 
 	def has_diagonal_winner
-		if (((@board[0] == @board[4]) && (@board[0] == @board[8])) || ((@board[2] == @board[4]) && (@board[2] == @board[6])))
-			return true
-		else
-			return false
-		end
+		(((@board[0] == @board[4]) && (@board[0] == @board[8])) || ((@board[2] == @board[4]) && (@board[2] == @board[6])))
 	end
 
 	# Print current board
