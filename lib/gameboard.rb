@@ -1,9 +1,9 @@
 class GameBoard
-	attr_reader :board, :num_pieces, :valid_moves, :is_player_turn
+	attr_reader :board, :num_pieces, :valid_moves, :player
 
-	def initialize(is_player_turn)
+	def initialize(player)
 		@board = []
-		@is_player_turn = is_player_turn
+		@player = player
 		@num_pieces = 0
 		@valid_moves = [1,2,3,4,5,6,7,8,9]
 		9.times do |i| 
@@ -15,6 +15,7 @@ class GameBoard
 	def after_clone
 		@board = @board.clone
 		@valid_moves = @valid_moves.clone
+		@player = @player.clone
 	end
 
 	# Place a piece on the board / Make a move
@@ -22,7 +23,7 @@ class GameBoard
 		@board[location - 1] = who
 		@num_pieces += 1
 		@valid_moves.delete(location)
-		@is_player_turn = !@is_player_turn
+		@player.changeTurn
 	end
 
 	def is_valid_move?(move)

@@ -3,7 +3,7 @@ require "gameboard"
 
 describe GameBoard do
 
-	let(:gameboard) {GameBoard.new(true)}
+	let(:gameboard) {GameBoard.new(Player.new("X",true))}
 
 	describe 'initializing the gameboard' do
 		it 'creates a board with strings 1 through 9' do
@@ -11,7 +11,7 @@ describe GameBoard do
 		end
 
 		it 'should start with player turn' do
-			gameboard.is_player_turn.should be_truthy
+			gameboard.player.is_player_turn.should be_truthy
 		end
 
 		it 'should have no pieces placed' do
@@ -41,9 +41,9 @@ describe GameBoard do
 		end
 
 		it 'should change the turn' do 
-			prev_turn = gameboard.is_player_turn
+			prev_turn = gameboard.player.is_player_turn
 			gameboard.place_piece(2,"O")
-			gameboard.is_player_turn.should == !prev_turn
+			gameboard.player.is_player_turn.should == !prev_turn
 		end
 
 		it 'should change as invalid move' do
@@ -76,14 +76,25 @@ describe GameBoard do
 		it 'should have the same variables' do
 			newboard.board.should == gameboard.board
 			newboard.num_pieces.should == gameboard.num_pieces
-			newboard.is_player_turn.should == gameboard.is_player_turn
+			newboard.player.is_player_turn.should == gameboard.player.is_player_turn
 			newboard.valid_moves.should == gameboard.valid_moves
+			newboard.player.piece.should == gameboard.player.piece
+			newboard.player.opponent_piece.should == gameboard.player.opponent_piece
+			newboard.player.is_player_turn.should == gameboard.player.is_player_turn
 		end
 
 		it 'should have different object ids' do
 			newboard.object_id.should_not == gameboard.object_id
 			newboard.board.object_id.should_not == gameboard.board.object_id
 			newboard.valid_moves.object_id.should_not == gameboard.valid_moves.object_id
+			newboard.player.object_id.should_not == gameboard.player.object_id
+		end
+
+		it 'should not change original board after we change newboard variables' do
+			newboard.place_piece(2,"O")
+			newboard.num_pieces.should_not == gameboard.num_pieces
+			newboard.valid_moves.should_not == gameboard.valid_moves
+			newboard.player.is_player_turn.should_not == gameboard.player.is_player_turn
 		end
 	end
 
