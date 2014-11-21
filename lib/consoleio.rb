@@ -2,7 +2,7 @@ module ConsoleIO
 
 	def self.start_game_input
 		puts "Hello! Let's play a game of tic-tac-toe against a computer!"
-		puts "Please type 1 to go First(X) or 2 to go Second(O)"
+		puts "Please type 1 to go First(X), 2 to go Second(O), or 3 to exit"
 		gets.chomp
 	end
 
@@ -34,5 +34,6 @@ module ConsoleIO
 				puts "Player won as " + player.piece + "!"
 			end
 		end
+		puts "--------------------------------------------------------------"
 	end
 end
