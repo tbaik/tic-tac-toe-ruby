@@ -5,11 +5,13 @@ require "./lib/consoleio"
 module GameLoop
 
 	def self.run_ttt_loop
-		player = GameLoop.initial_input
-		gb = GameBoard.new(player)
-		gb.print_board
-		has_winner = run_game_loop(gb)
-		ConsoleIO.winner_output(has_winner, gb.num_pieces, gb.player)
+		while(true)
+			player = GameLoop.initial_input
+			gb = GameBoard.new(player)
+			gb.print_board
+			has_winner = play_until_finish(gb)
+			ConsoleIO.winner_output(has_winner, gb.num_pieces, gb.player)
+		end
 	end
 
 	def self.initial_input
@@ -33,7 +35,7 @@ module GameLoop
 		end
 	end
 
-	def self.run_game_loop(gb)
+	def self.play_until_finish(gb)
 		has_winner = false
 		while(!has_winner && gb.num_pieces < 9)
 			if gb.player.is_player_turn == true
