@@ -1,5 +1,6 @@
 require "./lib/gameboard"
 require "./lib/player"
+require "./lib/consoleio"
 
 # Compute and compare which move will give us the best score.
 def best_move(game_board)
@@ -61,14 +62,19 @@ def minimax(game_board)
 	end
 end
 
-puts "Hello! Let's play a game of tic-tac-toe against a computer!"
-puts "Please type 1 to go First(X) or 2 to go Second(O)"
-turn = gets.chomp
 
-if turn == "2"
-	player = Player.new("O", false)
-else
-	player = Player.new("X", true)
+while(true)
+	turn = ConsoleIO.start_game_input
+
+	if turn == "2"
+		player = Player.new("O", false)
+		break;
+	elsif turn == "1"
+		player = Player.new("X", true)
+		break;
+	else
+		;
+	end
 end
 
 gb = GameBoard.new(player)
@@ -78,33 +84,24 @@ gb.print_board
 while(!has_winner && gb.num_pieces < 9)
 	if gb.player.is_player_turn == true
 		while(true)
-			puts "Here's the Game Board. Please type an empty piece location (1-9) to place a piece."
-			piece_location = gets
+			piece_location = ConsoleIO.next_piece_input
 			if gb.is_valid_move?(piece_location)
 				gb.place_piece(piece_location.to_i, player.piece) # make a move
-				puts "Player places " + player.piece + " on " + piece_location
+				ConsoleIO.place_player_piece(player.piece, piece_location)
 				break;
 			else
-				puts "Invalid move. Try Again!"
+				ConsoleIO.invalid_move
 			end
 		end
 	else
 		# Computer does minimax algorithm, chooses best move or piece location.
 		piece_location = best_move(gb)
 		gb.place_piece(piece_location, player.opponent_piece)
-		puts "Computer places " + player.opponent_piece + " on " + (piece_location).to_s
+		ConsoleIO.place_computer_piece(player.opponent_piece, (piece_location).to_s)
 	end
 	gb.print_board
 	has_winner = gb.has_winner
 end
 
-# We have a winner or a tie!
-if (!has_winner && (gb.num_pieces == 9)) #tied
-	puts "It's a tie!"
-else
-	if gb.player.is_player_turn 
-		puts "The Computer won as " + player.opponent_piece + "!"
-	else
-		puts "Player won as " + player.piece + "!"
-	end
-end
+ConsoleIO.winner_output(has_winner, gb.num_pieces, gb.player)
+
