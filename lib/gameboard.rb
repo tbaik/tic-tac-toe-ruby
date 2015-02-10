@@ -1,11 +1,12 @@
 class GameBoard
 	attr_accessor :board, :num_pieces, :valid_moves
 
-	def initialize
+	def initialize(length)
 		@board = []
 		@num_pieces = 0
-		@valid_moves = (1..9).to_a
-		9.times do |i| 
+		sq_length = length.to_i ** 2
+		@valid_moves = (1..sq_length).to_a
+		sq_length.times do |i| 
 			@board[i] = (i + 1).to_s
 		end
 	end

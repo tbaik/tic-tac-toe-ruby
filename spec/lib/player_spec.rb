@@ -16,8 +16,17 @@ require 'ttt_game'
 		end
 	end
 
+	describe EasyAI do
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), EasyAI.new("X"))}
+
+		it 'is able to choose a move' do
+			game.computer_player.choose_move(game)
+			expect(game.game_board.num_pieces).to eq(1)
+		end
+	end
+
 	describe HardAI do
-		let(:game) {TTTGame.new(GameBoard.new, HumanPlayer.new("O",false), HardAI.new("X"))}
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), HardAI.new("X"))}
 		#O is human, X is computer. X goes first.
 
 		it 'should take the last position available' do
@@ -64,7 +73,7 @@ require 'ttt_game'
 		end
 
 		it 'should pick middle location for at least a tie game' do
-			ngame = TTTGame.new(GameBoard.new, HumanPlayer.new("X",true), HardAI.new("O")) #X is human, O is computer, X goes first
+			ngame = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X",true), HardAI.new("O")) #X is human, O is computer, X goes first
 			ngame.make_move(1,"X") 
 
 			ngame.computer_player.choose_move(ngame)

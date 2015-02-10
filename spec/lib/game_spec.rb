@@ -6,7 +6,7 @@ require "./lib/ttt_rules"
 
 describe TTTGame do
 	let(:game) do 
-		game = TTTGame.new(GameBoard.new, HumanPlayer.new("O",true), HardAI.new("X"))	
+		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",true), HardAI.new("X"))	
 	end
 	it 'should initialize with all parameters' do
 		expect(game).not_to be_nil

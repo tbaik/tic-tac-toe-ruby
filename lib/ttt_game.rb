@@ -17,7 +17,7 @@ class TTTGame
 		has_winner = false
 		ConsoleIO.print_message(TTTRules.board_string(@game_board.board))
 
-		while(!has_winner && @game_board.num_pieces < 9)
+		while(!has_winner && @game_board.num_pieces < @game_board.board.size)
 			if @human_player.is_player_turn == true
 				@human_player.choose_move(self)	
 			else
