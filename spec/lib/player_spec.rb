@@ -23,8 +23,65 @@ require 'ttt_game'
 			game.computer_player.choose_move(game)
 			expect(game.game_board.num_pieces).to eq(1)
 		end
+
+		it 'takes a possible horizontal tic-tac-toe' do
+			game.make_move(1,"X")
+			game.make_move(4,"O")
+			game.make_move(2,"X")
+			game.make_move(8,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[2]).to eq("X")
+		end
+		it 'takes a possible vertical tic-tac-toe' do
+			game.make_move(1,"X")
+			game.make_move(2,"O")
+			game.make_move(4,"X")
+			game.make_move(9,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[6]).to eq("X")
+		end
+
+		it 'takes a possible diagonal tic-tac-toe' do
+			game.make_move(1,"X")
+			game.make_move(4,"O")
+			game.make_move(5,"X")
+			game.make_move(8,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[8]).to eq("X")
+		end
 	end
 
+	describe MediumAI do
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), MediumAI.new("X"))}
+
+		it 'blocks horizontal tic-tac-toe.' do
+			game.make_move(4,"X")
+			game.make_move(1,"O")
+			game.make_move(8,"X")
+			game.make_move(2,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[2]).to eq("X")
+		end
+
+		it 'blocks vertical tic-tac-toe' do
+			game.make_move(2,"X")
+			game.make_move(1,"O")
+			game.make_move(9,"X")
+			game.make_move(4,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[6]).to eq("X")
+		end
+
+		it 'blocks diagonal tic-tac-toe' do
+			game.make_move(2,"X")
+			game.make_move(1,"O")
+			game.make_move(6,"X")
+			game.make_move(5,"O")
+			game.computer_player.choose_move(game)	
+			expect(game.game_board.board[8]).to eq("X")
+		end
+	end
+		
 	describe HardAI do
 		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), HardAI.new("X"))}
 		#O is human, X is computer. X goes first.

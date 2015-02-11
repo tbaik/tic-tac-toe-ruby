@@ -5,6 +5,12 @@ module TTTRules
 			gb.valid_moves.include?(move.to_i)
 		end
 
+		#for the purposes of computer player evaluation.
+		def has_winner_eval(game_board)
+			return false if game_board.num_pieces < ((Math.sqrt(game_board.board.size) * 2) - 1)-1 
+			has_vertical_winner(game_board.board) || has_horizontal_winner(game_board.board) || has_diagonal_winner(game_board.board)
+		end
+
 		def has_winner(game_board)
 			return false if game_board.num_pieces < ((Math.sqrt(game_board.board.size) * 2) - 1) 
 			has_vertical_winner(game_board.board) || has_horizontal_winner(game_board.board) || has_diagonal_winner(game_board.board)
