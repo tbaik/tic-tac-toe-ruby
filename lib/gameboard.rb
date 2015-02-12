@@ -1,13 +1,19 @@
 class GameBoard
 	attr_accessor :board, :num_pieces, :valid_moves
 
-	def initialize(length)
-		@board = []
-		@num_pieces = 0
-		sq_length = length.to_i ** 2
-		@valid_moves = (1..sq_length).to_a
-		sq_length.times do |i| 
-			@board[i] = (i + 1).to_s
+	def initialize(*args)
+		if args.size == 1
+			@board = []
+			@num_pieces = 0
+			sq_length = args[0].to_i ** 2
+			@valid_moves = (1..sq_length).to_a
+			sq_length.times do |i| 
+				@board[i] = (i + 1).to_s
+			end
+		elsif args.size > 1
+			@board = args[0]
+			@num_pieces = args[1] 
+			@valid_moves = args[2] 
 		end
 	end
 

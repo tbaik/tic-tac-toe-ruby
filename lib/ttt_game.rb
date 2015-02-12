@@ -26,7 +26,7 @@ class TTTGame
 			ConsoleIO.print_message(TTTRules.board_string(@game_board.board))
 			has_winner = TTTRules.has_winner(@game_board)
 		end
-		ConsoleIO.print_message(TTTRules.winner_output(has_winner, @game_board.num_pieces, @human_player, @computer_player))
+		ConsoleIO.print_message(TTTRules.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
 	end
 
 	# Place a piece on the board / Make a move

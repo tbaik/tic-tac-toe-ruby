@@ -75,4 +75,9 @@ describe GameBoard do
 			end
 		end
 	end
+
+	it 'allows you to initialize with 3 parameters' do
+		gb = GameBoard.new(["1"],0,[1])
+		expect(gb).not_to be_nil
+	end
 end
