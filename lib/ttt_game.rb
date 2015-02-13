@@ -1,4 +1,5 @@
 require "./lib/gameboard"
+require "./lib/string_builder"
 require "./lib/human_player"
 require "./lib/hard_ai"
 require "./lib/medium_ai"
@@ -15,7 +16,7 @@ class TTTGame
 
 	def play  
 		has_winner = false
-		ConsoleIO.print_message(TTTRules.board_string(@game_board.board))
+		ConsoleIO.print_message(StringBuilder.board_string(@game_board.board))
 
 		while(!has_winner && @game_board.num_pieces < @game_board.board.size)
 			if @human_player.is_player_turn == true
@@ -23,10 +24,10 @@ class TTTGame
 			else
 				@computer_player.choose_move(self)	
 			end
-			ConsoleIO.print_message(TTTRules.board_string(@game_board.board))
+			ConsoleIO.print_message(StringBuilder.board_string(@game_board.board))
 			has_winner = TTTRules.has_winner(@game_board)
 		end
-		ConsoleIO.print_message(TTTRules.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
+		ConsoleIO.print_message(StringBuilder.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
 	end
 
 	# Place a piece on the board / Make a move
