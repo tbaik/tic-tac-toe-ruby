@@ -1,9 +1,10 @@
-class HumanPlayer
+require "./lib/player"
+
+class HumanPlayer < Player
 	attr_accessor :is_player_turn
-	attr_reader :piece
 
 	def initialize(piece, is_player_turn)
-		@piece = piece
+		super(piece)
 		@is_player_turn = is_player_turn
 	end
 

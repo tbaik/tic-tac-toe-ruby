@@ -1,9 +1,9 @@
 require "./lib/ttt_rules"
+require "./lib/player"
 
-class HardAI
-	attr_accessor :piece
+class HardAI < Player
 	def initialize(piece)
-		@piece = piece
+		super(piece)
 	end
 
 	def choose_move(game)

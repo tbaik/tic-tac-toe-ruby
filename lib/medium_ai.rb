@@ -1,8 +1,8 @@
-class MediumAI
-	attr_accessor :piece
-	
+require "./lib/player"
+
+class MediumAI < Player
 	def initialize(piece)
-		@piece = piece
+		super(piece)
 	end
 
 	def choose_move(game)
