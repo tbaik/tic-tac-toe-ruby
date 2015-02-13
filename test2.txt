@@ -1,0 +1,1 @@
+#<TTTGame:0x007fed74121060 @game_board=#<GameBoard:0x007fed74121358 @board=["1", "2", "3", "4", "5", "6", "7", "8", "9"], @num_pieces=0, @valid_moves=[1, 2, 3, 4, 5, 6, 7, 8, 9]>, @human_player=#<HumanPlayer:0x007fed741210d8 @piece="O", @is_player_turn=true>, @computer_player=#<HardAI:0x007fed74121088 @piece="X">>

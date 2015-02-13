@@ -18,7 +18,7 @@ class HumanPlayer
 					ConsoleIO.print_message("Please type the name of the save file:")
 					file_name = ConsoleIO.get_input
 					if file_name != ""	
-						TTTRules.write_game(game, file_name)
+						TTTGameCreator.write_game(game, file_name)
 						exit
 					end
 				end
