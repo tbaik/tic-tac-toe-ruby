@@ -36,11 +36,4 @@ class TTTGame
 		@game_board.place_piece(location,who)
 		@human_player.changeTurn
 	end
-
-	# This is required since cloning alone does shallow copying not deep copying.
-	def after_clone
-		@human_player = @human_player.clone
-		@game_board = @game_board.clone
-		@game_board.after_clone
-	end
 end

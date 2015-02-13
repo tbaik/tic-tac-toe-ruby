@@ -15,7 +15,7 @@ describe TTTGame do
 	describe 'cloning a new game' do
 		let(:newgame) do 
 			newgame = game.clone
-			newgame.after_clone
+			newgame.computer_player.deep_copy_clone(newgame)
 			newgame
 		end
 

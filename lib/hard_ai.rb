@@ -66,7 +66,7 @@ class HardAI < Player
 
 	def get_score(game, move, piece) 
 		new_game = game.clone
-		new_game.after_clone
+		deep_copy_clone(new_game)
 		new_game.make_move(move, piece)
 		minimax(new_game)
 	end
@@ -90,8 +90,16 @@ class HardAI < Player
 
 	def has_ttt(game, move, piece) 
 		new_game = game.clone
-		new_game.after_clone
+		deep_copy_clone(new_game)
 		new_game.make_move(move,piece)
 		TTTRules.has_winner_eval(new_game.game_board)
+	end
+
+	def deep_copy_clone(new_game)
+		new_game.human_player = new_game.human_player.clone
+		new_game.game_board = new_game.game_board.clone
+		new_game.game_board.board = new_game.game_board.board.clone
+		new_game.game_board.valid_moves = new_game.game_board.valid_moves.clone
+		new_game
 	end
 end
