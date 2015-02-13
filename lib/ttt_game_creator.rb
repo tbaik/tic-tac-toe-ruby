@@ -1,20 +1,20 @@
 module TTTGameCreator
 	class << self
 
-		def create_game_board
+		def create_game_board(io)
 			while(true)
-				ConsoleIO.print_message("Please select a Game Board size: 3x3(3), 4x4(4), or 5x5(5)")
-				gb_size = ConsoleIO.get_input
+				io.print_message("Please select a Game Board size: 3x3(3), 4x4(4), or 5x5(5)")
+				gb_size = io.get_input
 				if !gb_size.nil? && (gb_size.to_i > 2 && gb_size.to_i < 6)
 					return GameBoard.new(gb_size)	
 				end
 			end
 		end
 
-		def create_human_player
+		def create_human_player(io)
 			while(true)	
-				ConsoleIO.print_message("Hello! Let's play a game of tic-tac-toe against a computer!\nPlease type 1 to go First(X), 2 to go Second(O), or 3 to exit")
-				turn = ConsoleIO.get_input
+				io.print_message("Hello! Let's play a game of tic-tac-toe against a computer!\nPlease type 1 to go First(X), 2 to go Second(O), or 3 to exit")
+				turn = io.get_input
 				human = create_human_helper(turn)
 				return human if !human.nil?	
 			end
@@ -33,10 +33,10 @@ module TTTGameCreator
 			end
 		end
 
-		def create_computer_player(human_piece)	
+		def create_computer_player(human_piece,io)	
 			while(true)
-				ConsoleIO.print_message("Choose the difficulty of the Computer: Easy(1), Medium(2), or Hard(3)")
-				difficulty = ConsoleIO.get_input
+				io.print_message("Choose the difficulty of the Computer: Easy(1), Medium(2), or Hard(3)")
+				difficulty = io.get_input
 				computer = create_computer_helper(difficulty, TTTRules.opposite_piece(human_piece)) 
 				return computer if !computer.nil?
 			end	
@@ -79,10 +79,11 @@ module TTTGameCreator
 		end	
 
 		def new_game
-			hp = create_human_player
-			cp = create_computer_player(hp.piece)
-			gb = create_game_board
-			TTTGame.new(gb,hp,cp)
+			io = ConsoleIO
+			hp = create_human_player(io)
+			cp = create_computer_player(hp.piece,io)
+			gb = create_game_board(io)
+			TTTGame.new(gb,hp,cp,io)
 		end
 
 		def read_and_create_game(file_name)
@@ -90,7 +91,7 @@ module TTTGameCreator
 			gb = read_and_create_game_board(game_string[2])
 			hp = read_and_create_human_player(game_string[3])
 			cp = read_and_create_computer_player(game_string[4])
-			TTTGame.new(gb,hp,cp)
+			TTTGame.new(gb,hp,cp,ConsoleIO)
 		end
 
 		def write_game(game, file_name)

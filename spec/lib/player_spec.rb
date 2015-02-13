@@ -17,7 +17,7 @@ require 'ttt_game'
 	end
 
 	describe EasyAI do
-		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), EasyAI.new("X"))}
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), EasyAI.new("X"), ConsoleIO)}
 
 		it 'is able to choose a move' do
 			game.computer_player.choose_move(game)
@@ -52,7 +52,7 @@ require 'ttt_game'
 	end
 
 	describe MediumAI do
-		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), MediumAI.new("X"))}
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), MediumAI.new("X"), ConsoleIO)}
 
 		it 'blocks horizontal tic-tac-toe.' do
 			game.make_move(4,"X")
@@ -83,7 +83,7 @@ require 'ttt_game'
 	end
 		
 	describe HardAI do
-		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), HardAI.new("X"))}
+		let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",false), HardAI.new("X"), ConsoleIO)}
 		#O is human, X is computer. X goes first.
 
 		it 'should take the last position available' do
@@ -130,7 +130,7 @@ require 'ttt_game'
 		end
 
 		it 'should pick middle location for at least a tie game' do
-			ngame = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X",true), HardAI.new("O")) #X is human, O is computer, X goes first
+			ngame = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X",true), HardAI.new("O"), ConsoleIO) #X is human, O is computer, X goes first
 			ngame.make_move(1,"X") 
 
 			ngame.computer_player.choose_move(ngame)

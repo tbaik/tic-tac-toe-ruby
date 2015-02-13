@@ -7,16 +7,17 @@ require "./lib/easy_ai"
 require "./lib/consoleio"
 
 class TTTGame 
-	attr_accessor :game_board, :human_player, :computer_player
-	def initialize(game_board, human_player, computer_player)
+	attr_accessor :game_board, :human_player, :computer_player, :io
+	def initialize(game_board, human_player, computer_player, io)
 		@game_board = game_board
 		@human_player = human_player
 		@computer_player = computer_player 
+		@io = io
 	end
 
 	def play  
 		has_winner = false
-		ConsoleIO.print_message(StringBuilder.board_string(@game_board.board))
+		@io.print_message(StringBuilder.board_string(@game_board.board))
 
 		while(!has_winner && @game_board.num_pieces < @game_board.board.size)
 			if @human_player.is_player_turn == true
@@ -24,10 +25,10 @@ class TTTGame
 			else
 				@computer_player.choose_move(self)	
 			end
-			ConsoleIO.print_message(StringBuilder.board_string(@game_board.board))
+			@io.print_message(StringBuilder.board_string(@game_board.board))
 			has_winner = TTTRules.has_winner(@game_board)
 		end
-		ConsoleIO.print_message(StringBuilder.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
+		@io.print_message(StringBuilder.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
 	end
 
 	# Place a piece on the board / Make a move

@@ -16,7 +16,7 @@ class HardAI < Player
 			piece_location = medium_move(game)
 		end
 			game.make_move(piece_location, @piece)
-			ConsoleIO.print_message("Computer places " + @piece + " on " + piece_location.to_s)
+			game.io.print_message("Computer places " + @piece + " on " + piece_location.to_s)
 	end
 
 	# Compute and compare which move will give us the best score.

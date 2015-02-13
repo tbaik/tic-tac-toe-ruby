@@ -9,7 +9,7 @@ class EasyAI < Player
 	def choose_move(game)
 		piece_location = best_move(game)
 		game.make_move(piece_location, @piece)
-		ConsoleIO.print_message("Computer places " + @piece + " on " + piece_location.to_s)
+		game.io.print_message("Computer places " + @piece + " on " + piece_location.to_s)
 	end
 	
 	def best_move(game)

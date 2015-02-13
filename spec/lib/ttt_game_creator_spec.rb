@@ -48,14 +48,14 @@ describe TTTGameCreator do
 	end
 
 	it 'writes objects of the game to a given file_name' do
-		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",true), HardAI.new("X"))	
+		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",true), HardAI.new("X"), ConsoleIO)	
 		file_name = "test1.txt"
 		TTTGameCreator.write_game(game,file_name)
 		expect(File.read("test1.txt")).to eq(game.inspect)
 	end
 
 	it 'read file given a file_name and create game' do
-		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",true), HardAI.new("X"))	
+		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O",true), HardAI.new("X"), ConsoleIO)	
 		file_name = "test2.txt"
 		TTTGameCreator.write_game(game,file_name)
 		new_game = TTTGameCreator.read_and_create_game(file_name)
