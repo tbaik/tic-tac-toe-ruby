@@ -1,4 +1,4 @@
-module ConsoleIO
+class ConsoleIO
 	class << self	
 		def print_message(message)
 			puts message

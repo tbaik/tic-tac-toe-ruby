@@ -27,6 +27,7 @@ RSpec.configure do |config|
     # ...rather than:
     #   # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+    expectations.syntax = [:should,:expect]
   end
 
   # rspec-mocks config goes here. You can use an alternate test double
@@ -36,6 +37,7 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+    mocks.syntax = [:should,:expect]
   end
 
 # The settings below are suggested to provide a good initial experience

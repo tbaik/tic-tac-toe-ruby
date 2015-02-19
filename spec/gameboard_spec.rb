@@ -6,6 +6,12 @@ require "hard_ai"
 require "gameboard"
 
 describe GameBoard do
+
+  it 'allows you to initialize with 3 parameters' do
+		gb = GameBoard.new(["1"],0,[1])
+		expect(gb).not_to be_nil
+	end
+
 	describe '3x3 board' do
 		let(:gameboard) {GameBoard.new(3)}
 
@@ -41,6 +47,7 @@ describe GameBoard do
 			end
 		end
 	end
+
 	describe '4x4 board' do
 		let(:gameboard) {GameBoard.new(4)}
 
@@ -58,6 +65,7 @@ describe GameBoard do
 			end
 		end
 	end
+
 	describe '5x5 board' do
 		let(:gameboard) {GameBoard.new(5)}
 
@@ -76,8 +84,25 @@ describe GameBoard do
 		end
 	end
 
-	it 'allows you to initialize with 3 parameters' do
-		gb = GameBoard.new(["1"],0,[1])
-		expect(gb).not_to be_nil
-	end
+	describe '#place_piece' do
+    let(:gameboard) {GameBoard.new(5)}
+
+    it 'changes the correct index on board' do
+      expect(gameboard.board[0]).to eq("1")
+      gameboard.place_piece(1,"X")
+      expect(gameboard.board[0]).to eq("X")
+    end
+
+    it 'adds one piece to num_pieces' do
+      expect(gameboard.num_pieces).to eq(0)
+      gameboard.place_piece(1,"X")
+      expect(gameboard.num_pieces).to eq(1)
+    end
+
+    it 'invalidates move' do
+      expect(gameboard.valid_moves.include?(1)).to be_truthy 
+      gameboard.place_piece(1,"X")
+      expect(gameboard.valid_moves.include?(1)).to be_falsey
+    end
+  end
 end

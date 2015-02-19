@@ -15,8 +15,6 @@ class HardAI < Player
 			# since it will take too long to do a perfect evaluation on the board. 
 			piece_location = medium_move(game)
 		end
-			game.make_move(piece_location, @piece)
-			game.io.print_message("Computer places " + @piece + " on " + piece_location.to_s)
 	end
 
 	# Compute and compare which move will give us the best score.
@@ -44,7 +42,7 @@ class HardAI < Player
 			return 1 if game.game_board.num_pieces == 9 #tie game
 			score = 0
 			piece_to_place = ""
-			if game.human_player.is_player_turn
+			if game.is_player_turn
 				score = 999
 				piece_to_place = game.human_player.piece
 			else
@@ -54,13 +52,13 @@ class HardAI < Player
 
 			game.game_board.valid_moves.each do |move|
 				new_score = get_score(game, move, piece_to_place)
-				if ((game.human_player.is_player_turn && new_score < score) || (!game.human_player.is_player_turn && new_score > score))
+				if ((game.is_player_turn && new_score < score) || (!game.is_player_turn && new_score > score))
 					score = new_score
 				end
 			end
 			return score
 		else # we have a winner
-			return game.human_player.is_player_turn ? 2 : 0
+			return game.is_player_turn ? 2 : 0
 		end
 	end
 
@@ -91,7 +89,7 @@ class HardAI < Player
 	def has_ttt(game, move, piece) 
 		new_game = game.clone
 		deep_copy_clone(new_game)
-		new_game.make_move(move,piece)
+		new_game.make_move(move, piece)
 		TTTRules.has_winner_eval(new_game.game_board)
 	end
 

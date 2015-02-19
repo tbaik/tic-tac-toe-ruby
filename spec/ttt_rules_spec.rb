@@ -5,8 +5,9 @@ require "ttt_game"
 require "ttt_game_creator"
 
 describe TTTRules do 
-	describe 'using is_valid_move' do 
+	describe '#is_valid_move' do 
 		let(:gameboard) {GameBoard.new(3)}
+
 		it 'should return true for valid moves' do
 			TTTRules.is_valid_move?("2", gameboard).should be_truthy
 		end
@@ -18,13 +19,21 @@ describe TTTRules do
 			TTTRules.is_valid_move?("", gameboard).should be_falsey
 		end
 
-		it 'should change as invalid move' do
+		it 'knows if move is not valid anymore' do
 			expect(TTTRules.is_valid_move?("2",gameboard)).to be_truthy
 			gameboard.place_piece(2,"O")
 			expect(TTTRules.is_valid_move?("2",gameboard)).to be_falsey 
 		end
-
 	end
+  describe '#opposite_piece' do
+    it 'gives back O when given X' do
+  		expect(TTTRules.opposite_piece("X")).to eq("O")
+  	end
+
+    it 'gives back X when given O' do 
+	  	expect(TTTRules.opposite_piece("O")).to eq("X")
+    end
+  end
 
 	describe 'checking for winners 3x3' do 
 		let(:gameboard) {GameBoard.new(3)}
@@ -133,31 +142,19 @@ describe TTTRules do
 	describe 'checking for winners 4x4' do 
 		let(:gameboard) {GameBoard.new(4)}
 
-		it 'should have horizontal winners row 1' do 
+ 	  it 'should only have a winner if it has more than seven pieces' do
 			gameboard.place_piece(1,"O")
 			gameboard.place_piece(2,"O")
 			gameboard.place_piece(3,"O")
 			gameboard.place_piece(4,"O")
-			TTTRules.has_horizontal_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have horizontal winners row 2' do 
 			gameboard.place_piece(5,"X")
 			gameboard.place_piece(6,"X")
+			TTTRules.has_winner(gameboard).should_not be_truthy
 			gameboard.place_piece(7,"X")
-			gameboard.place_piece(8,"X")
-			TTTRules.has_horizontal_winner(gameboard.board).should be_truthy
+			TTTRules.has_winner(gameboard).should be_truthy
 		end
 
-		it 'should have horizontal winners row 3' do 
-			gameboard.place_piece(9,"O")
-			gameboard.place_piece(10,"O")
-			gameboard.place_piece(11,"O")
-			gameboard.place_piece(12,"O")
-			TTTRules.has_horizontal_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have horizontal winners row 4' do 
+		it 'should have horizontal winners' do 
 			gameboard.place_piece(13,"O")
 			gameboard.place_piece(14,"O")
 			gameboard.place_piece(15,"O")
@@ -173,31 +170,7 @@ describe TTTRules do
 			TTTRules.has_horizontal_winner(gameboard.board).should be_falsey 
 		end
 
-		it 'should have vertical winners col 1' do 
-			gameboard.place_piece(1,"O")
-			gameboard.place_piece(5,"O")
-			gameboard.place_piece(9,"O")
-			gameboard.place_piece(13,"O")
-			TTTRules.has_vertical_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have vertical winners col 2' do 
-			gameboard.place_piece(2,"X")
-			gameboard.place_piece(6,"X")
-			gameboard.place_piece(10,"X")
-			gameboard.place_piece(14,"X")
-			TTTRules.has_vertical_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have vertical winners col 3' do 
-			gameboard.place_piece(3,"O")
-			gameboard.place_piece(7,"O")
-			gameboard.place_piece(11,"O")
-			gameboard.place_piece(15,"O")
-			TTTRules.has_vertical_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have vertical winners col 4' do 
+		it 'should have vertical winners' do 
 			gameboard.place_piece(4,"O")
 			gameboard.place_piece(8,"O")
 			gameboard.place_piece(12,"O")
@@ -242,16 +215,21 @@ describe TTTRules do
 	describe 'checking for winners 5x5' do 
 		let(:gameboard) {GameBoard.new(5)}
 
-		it 'should have horizontal winners row 1' do 
+    it 'should only have a winner if it has more than nine pieces' do
 			gameboard.place_piece(1,"O")
 			gameboard.place_piece(2,"O")
 			gameboard.place_piece(3,"O")
 			gameboard.place_piece(4,"O")
 			gameboard.place_piece(5,"O")
-			TTTRules.has_horizontal_winner(gameboard.board).should be_truthy
+			gameboard.place_piece(6,"X")
+			gameboard.place_piece(7,"X")
+			gameboard.place_piece(8,"X")
+			TTTRules.has_winner(gameboard).should_not be_truthy
+			gameboard.place_piece(9,"X")
+			TTTRules.has_winner(gameboard).should be_truthy
 		end
 
-		it 'should have horizontal winners row 2' do 
+		it 'should have horizontal winners' do 
 			gameboard.place_piece(6,"X")
 			gameboard.place_piece(7,"X")
 			gameboard.place_piece(8,"X")
@@ -269,16 +247,7 @@ describe TTTRules do
 			TTTRules.has_horizontal_winner(gameboard.board).should be_falsey 
 		end
 
-		it 'should have vertical winners col 1' do 
-			gameboard.place_piece(1,"O")
-			gameboard.place_piece(6,"O")
-			gameboard.place_piece(11,"O")
-			gameboard.place_piece(16,"O")
-			gameboard.place_piece(21,"O")
-			TTTRules.has_vertical_winner(gameboard.board).should be_truthy
-		end
-
-		it 'should have vertical winners col 2' do 
+		it 'should have vertical winners' do 
 			gameboard.place_piece(2,"X")
 			gameboard.place_piece(7,"X")
 			gameboard.place_piece(12,"X")
@@ -325,10 +294,18 @@ describe TTTRules do
 
 	end
 
-	it 'should give us the opposite piece' do
-		expect(TTTRules.opposite_piece("O")).to eq("X")
-		expect(TTTRules.opposite_piece("X")).to eq("O")
-	end
+  describe '#has_winner_eval' do
+		let(:gameboard) {GameBoard.new(3)}
 
+    it 'should have winner with one less piece' do
+      gameboard.place_piece(1,"O")
+			gameboard.place_piece(2,"O")
+			gameboard.place_piece(3,"O")
+			TTTRules.has_winner_eval(gameboard).should_not be_truthy
+			gameboard.place_piece(5,"X")
+			TTTRules.has_winner_eval(gameboard).should be_truthy
+    end
+  end
+	
 end
 

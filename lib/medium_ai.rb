@@ -7,8 +7,6 @@ class MediumAI < Player
 
 	def choose_move(game)
 		piece_location = best_move(game)
-		game.make_move(piece_location, @piece)
-		game.io.print_message("Computer places " + @piece + " on " + piece_location.to_s)
 	end
 
 	# If we have a tic-tac-toe, take it. Then, if computer WILL make a tic-tac-toe, take it.
@@ -31,7 +29,7 @@ class MediumAI < Player
 	def has_ttt(game, move, piece) 
 		new_game = game.clone
 		deep_copy_clone(new_game)
-		new_game.make_move(move,piece)
+		new_game.make_move(move, piece)
 		TTTRules.has_winner_eval(new_game.game_board)
 	end
 

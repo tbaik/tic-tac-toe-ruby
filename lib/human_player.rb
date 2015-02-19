@@ -1,11 +1,9 @@
 require "./lib/player"
 
 class HumanPlayer < Player
-	attr_accessor :is_player_turn
 
-	def initialize(piece, is_player_turn)
+	def initialize(piece)
 		super(piece)
-		@is_player_turn = is_player_turn
 	end
 
 	def choose_move(game)
@@ -25,16 +23,11 @@ class HumanPlayer < Player
 				end
 			end
 			if TTTRules.is_valid_move?(piece_location,game.game_board)
-				game.make_move(piece_location.to_i, game.human_player.piece) # make a move
-				game.io.print_message("Player places " + game.human_player.piece + " on " + piece_location)
-				break;
+        return piece_location.to_i
 			else
 				game.io.print_message("Invalid move. Try Again!")
 			end
 		end
 	end
 
-	def changeTurn
-		@is_player_turn = !@is_player_turn
-	end
 end

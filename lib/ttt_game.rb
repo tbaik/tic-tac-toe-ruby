@@ -1,39 +1,48 @@
 require "./lib/gameboard"
-require "./lib/string_builder"
 require "./lib/human_player"
 require "./lib/hard_ai"
 require "./lib/medium_ai"
 require "./lib/easy_ai"
 require "./lib/consoleio"
+require "./lib/board_presenter"
+require "./lib/winner_presenter"
 
 class TTTGame 
-	attr_accessor :game_board, :human_player, :computer_player, :io
-	def initialize(game_board, human_player, computer_player, io)
+	attr_accessor :game_board, :human_player, :computer_player, :io, :is_player_turn
+
+	def initialize(game_board, human_player, computer_player, io, is_player_turn)
 		@game_board = game_board
 		@human_player = human_player
-		@computer_player = computer_player 
-		@io = io
-	end
+    @computer_player = computer_player 
+    @io = io
+    @is_player_turn = is_player_turn
+  end
 
-	def play  
-		has_winner = false
-		@io.print_message(StringBuilder.board_string(@game_board.board))
+  def play  
+    has_winner = false
+    @io.print_message(BoardPresenter.board_string(@game_board.board))
 
-		while(!has_winner && @game_board.num_pieces < @game_board.board.size)
-			if @human_player.is_player_turn == true
-				@human_player.choose_move(self)	
-			else
-				@computer_player.choose_move(self)	
-			end
-			@io.print_message(StringBuilder.board_string(@game_board.board))
-			has_winner = TTTRules.has_winner(@game_board)
-		end
-		@io.print_message(StringBuilder.winner_string(has_winner, @game_board.num_pieces, @human_player, @computer_player))
-	end
+    while(!has_winner && @game_board.num_pieces < @game_board.board.size)
+      if is_player_turn
+        piece_location = @human_player.choose_move(self)
+        make_move(piece_location, @human_player.piece)
+      else
+        piece_location = @computer_player.choose_move(self)
+        make_move(piece_location, @computer_player.piece)
+      end
+      @io.print_message(BoardPresenter.board_string(@game_board.board))
+      has_winner = TTTRules.has_winner(@game_board)
+    end
+    @io.print_message(WinnerPresenter.winner_string(has_winner, @human_player, @computer_player))
+  end
 
-	# Place a piece on the board / Make a move
-	def make_move(location, who) # int index , string for "O" or "X" 
-		@game_board.place_piece(location,who)
-		@human_player.changeTurn
-	end
+  def make_move(location, piece) 
+    @game_board.place_piece(location, piece)
+    changeTurn
+  end
+
+  def changeTurn
+    @is_player_turn = !@is_player_turn
+  end
+
 end
