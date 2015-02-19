@@ -6,10 +6,16 @@ require "hard_ai"
 require "gameboard"
 
 describe GameBoard do
+  
+  it 'allows you to initialize with just gb_size' do
+    expect{GameBoard.new(3)}.not_to raise_error
+  end
 
   it 'allows you to initialize with 3 parameters' do
-		gb = GameBoard.new(["1"],0,[1])
-		expect(gb).not_to be_nil
+    num_pieces = 0
+    board = ["1","2","3","4","5","6","7","8","9"]
+    valid_moves = [1,2,3,4,5,6,7,8,9] 
+    expect{GameBoard.new(num_pieces,board,valid_moves)}.not_to raise_error
 	end
 
 	describe '3x3 board' do

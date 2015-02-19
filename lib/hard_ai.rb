@@ -17,12 +17,11 @@ class HardAI < Player
 		end
 	end
 
-	# Compute and compare which move will give us the best score.
 	def best_move(game)
 		bestMove = -1
 		bestScore = -1
 		game.game_board.valid_moves.each do |move|
-			score = get_score(game, move, @piece) # pass in true since it's now human_player's turn.
+			score = get_score(game, move, @piece) 
 			if score > bestScore
 				bestScore = score
 				bestMove = move
@@ -37,9 +36,8 @@ class HardAI < Player
 	# taking into consideration whose turn it is. 
 	def minimax(game)
 		has_winner = TTTRules.has_winner(game.game_board)
-		# while still in play
 		if !has_winner
-			return 1 if game.game_board.num_pieces == 9 #tie game
+			return 1 if game.game_board.num_pieces == 9 
 			score = 0
 			piece_to_place = ""
 			if game.is_player_turn
@@ -93,7 +91,7 @@ class HardAI < Player
 		TTTRules.has_winner_eval(new_game.game_board)
 	end
 
-	def deep_copy_clone(new_game)
+  def deep_copy_clone(new_game)
 		new_game.human_player = new_game.human_player.clone
 		new_game.game_board = new_game.game_board.clone
 		new_game.game_board.board = new_game.game_board.board.clone

@@ -24,7 +24,7 @@ describe TTTGame do
   describe '#make_move' do
     let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), ConsoleIO, false)}	
 
-    it 'places piece on the game board' do
+    it 'places piece on the game board and output message' do
       new_game.make_move(2,"X")
       expect(new_game.game_board.num_pieces).to eq(1)
     end
@@ -35,6 +35,7 @@ describe TTTGame do
       expect(new_game.is_player_turn).to eq(!old_turn) 
     end
   end
+
 
   describe 'cloning a new game' do
     let(:newgame) do 

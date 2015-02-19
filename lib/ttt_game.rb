@@ -26,14 +26,16 @@ class TTTGame
       if is_player_turn
         piece_location = @human_player.choose_move(self)
         make_move(piece_location, @human_player.piece)
+        @io.print_message("The Player placed " + @human_player.piece + " on " + piece_location.to_s)
       else
         piece_location = @computer_player.choose_move(self)
         make_move(piece_location, @computer_player.piece)
+        @io.print_message("The Computer placed " + @computer_player.piece + " on " + piece_location.to_s)
       end
       @io.print_message(BoardPresenter.board_string(@game_board.board))
       has_winner = TTTRules.has_winner(@game_board)
     end
-    @io.print_message(WinnerPresenter.winner_string(has_winner, @human_player, @computer_player))
+    @io.print_message(WinnerPresenter.winner_string(has_winner, self))
   end
 
   def make_move(location, piece) 

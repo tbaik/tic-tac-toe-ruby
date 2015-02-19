@@ -26,7 +26,7 @@ class EasyAI < Player
 		TTTRules.has_winner_eval(new_game.game_board)
 	end
 
-	def deep_copy_clone(new_game)
+  def deep_copy_clone(new_game)
 		new_game.human_player = new_game.human_player.clone
 		new_game.game_board = new_game.game_board.clone
 		new_game.game_board.board = new_game.game_board.board.clone
