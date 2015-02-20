@@ -1,13 +1,13 @@
 require "./lib/ttt_rules"
-require "./lib/player"
+require "./lib/ttt_ai"
 
-class HardAI < Player
+class HardAI < TTTAI
 	def initialize(piece)
 		super(piece)
 	end
 
 	def choose_move(game)
-		if (game.game_board.board.size - game.game_board.num_pieces) < 11 
+		if (game.game_board.board.size - game.game_board.num_pieces) < 10 
 			# Computer does minimax algorithm, chooses best move or piece location.	
 			piece_location = best_move(game)
 		else
@@ -18,7 +18,7 @@ class HardAI < Player
 	end
 
 	def best_move(game)
-		bestMove = -1
+		bestMove = -99
 		bestScore = -1
 		game.game_board.valid_moves.each do |move|
 			score = get_score(game, move, @piece) 
@@ -37,7 +37,7 @@ class HardAI < Player
 	def minimax(game)
 		has_winner = TTTRules.has_winner(game.game_board)
 		if !has_winner
-			return 1 if game.game_board.num_pieces == 9 
+			return 1 if game.game_board.num_pieces == game.game_board.board.size 
 			score = 0
 			piece_to_place = ""
 			if game.is_player_turn
@@ -70,32 +70,18 @@ class HardAI < Player
 	# If we have a tic-tac-toe, take it. Then, if computer WILL make a tic-tac-toe, take it.
 	def medium_move(game)
 		game.game_board.valid_moves.each do |move|
-			if has_ttt(game, move, @piece) 
+			if has_next_ttt(game, move, @piece) 
 				return move
 			end
 		end
 		
 		game.game_board.valid_moves.each do |move|
-			if has_ttt(game, move, TTTRules.opposite_piece(@piece)) 
+			if has_next_ttt(game, move, TTTRules.opposite_piece(@piece)) 
 				return move
 			end
 		end
 
-		return game.game_board.valid_moves.sample #random if no tic-tac-toe next.
-	end
+    return game.game_board.valid_moves.sample #random if no tic-tac-toe next.
+  end
 
-	def has_ttt(game, move, piece) 
-		new_game = game.clone
-		deep_copy_clone(new_game)
-		new_game.make_move(move, piece)
-		TTTRules.has_winner_eval(new_game.game_board)
-	end
-
-  def deep_copy_clone(new_game)
-		new_game.human_player = new_game.human_player.clone
-		new_game.game_board = new_game.game_board.clone
-		new_game.game_board.board = new_game.game_board.board.clone
-		new_game.game_board.valid_moves = new_game.game_board.valid_moves.clone
-		new_game
-	end
 end

@@ -39,5 +39,6 @@ describe HardAI do
     piece_location = ngame.computer_player.best_move(ngame)
     expect(piece_location).to eq(5)
   end
+
 end
 

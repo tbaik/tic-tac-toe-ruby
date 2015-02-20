@@ -1,3 +1,7 @@
+require './lib/ttt_game_reader'
+require './lib/ttt_rules'
+require './lib/ttt_game'
+
 class TTTGameCreator
   attr_reader :new_receiver
 

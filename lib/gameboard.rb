@@ -5,7 +5,7 @@ class GameBoard
 		if board.empty?
 			@board = []
 			@num_pieces = 0
-			sq_length = gb_size_or_num_pieces ** 2 #gb_size
+			sq_length = gb_size_or_num_pieces.to_i ** 2 #gb_size
 			@valid_moves = (1..sq_length).to_a
 			sq_length.times do |i| 
 				@board[i] = (i + 1).to_s
