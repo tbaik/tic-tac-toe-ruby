@@ -8,24 +8,26 @@ describe MediumAI do
     expect(-> {MediumAI.new("X")}).not_to raise_error
   end 
 
-  it 'chooses piece location for a possible tic-tac-toe on the next move' do
-    game.make_move(1,"X")
-    game.make_move(4,"O")
-    game.make_move(5,"X")
-    game.make_move(8,"O")
+  describe '#choose_move' do
+    it 'chooses piece location for a possible tic-tac-toe on the next move' do
+      game.make_move(1,"X")
+      game.make_move(4,"O")
+      game.make_move(5,"X")
+      game.make_move(8,"O")
 
-    piece_location = game.computer_player.best_move(game)
-    expect(piece_location).to eq(9)
-  end
+      piece_location = game.computer_player.choose_move(game)
+      expect(piece_location).to eq(9)
+    end
 
-  it "blocks an enemy's possible tic-tac-toe" do
-    game.make_move(2,"X")
-    game.make_move(1,"O")
-    game.make_move(6,"X")
-    game.make_move(5,"O")
+    it "blocks an enemy's possible tic-tac-toe" do
+      game.make_move(2,"X")
+      game.make_move(1,"O")
+      game.make_move(6,"X")
+      game.make_move(5,"O")
 
-    piece_location = game.computer_player.best_move(game)
-    expect(piece_location).to eq(9)
+      piece_location = game.computer_player.choose_move(game)
+      expect(piece_location).to eq(9)
+    end
   end
 end
 

@@ -7,12 +7,9 @@ class HardAI < TTTAI
 	end
 
 	def choose_move(game)
-		if (game.game_board.board.size - game.game_board.num_pieces) < 10 
-			# Computer does minimax algorithm, chooses best move or piece location.	
+		if (game.game_board.valid_moves.size) < 10 
 			piece_location = best_move(game)
 		else
-		   	# This AI is Unbeatable for 3x3 but is beatable for 4x4 and 5x5 
-			# since it will take too long to do a perfect evaluation on the board. 
 			piece_location = medium_move(game)
 		end
 	end
@@ -55,7 +52,7 @@ class HardAI < TTTAI
 				end
 			end
 			return score
-		else # we have a winner
+		else 
 			return game.is_player_turn ? 2 : 0
 		end
 	end
@@ -67,21 +64,16 @@ class HardAI < TTTAI
 		minimax(new_game)
 	end
 	
-	# If we have a tic-tac-toe, take it. Then, if computer WILL make a tic-tac-toe, take it.
-	def medium_move(game)
-		game.game_board.valid_moves.each do |move|
-			if has_next_ttt(game, move, @piece) 
-				return move
-			end
-		end
-		
-		game.game_board.valid_moves.each do |move|
-			if has_next_ttt(game, move, TTTRules.opposite_piece(@piece)) 
-				return move
-			end
-		end
-
-    return game.game_board.valid_moves.sample #random if no tic-tac-toe next.
+  def medium_move(game)
+    piece = @piece
+    2.times do
+      game.game_board.valid_moves.each do |move|
+        if has_next_ttt(game, move, piece) 
+          return move
+        end
+      end
+      piece = TTTRules.opposite_piece(@piece)
+    end
+    return game.game_board.pick_random_move 
   end
-
 end

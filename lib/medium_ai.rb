@@ -6,23 +6,15 @@ class MediumAI < TTTAI
 	end
 
 	def choose_move(game)
-		piece_location = best_move(game)
-	end
-
-	# If we have a tic-tac-toe, take it. Then, if computer WILL make a tic-tac-toe, take it.
-	def best_move(game)
-		game.game_board.valid_moves.each do |move|
-			if has_next_ttt(game, move, @piece) 
-				return move
-			end
-		end
-		
-		game.game_board.valid_moves.each do |move|
-			if has_next_ttt(game, move, TTTRules.opposite_piece(@piece)) 
-				return move
-			end
-		end
-
-		return game.game_board.valid_moves.sample #random if no tic-tac-toe next.
+    piece = @piece
+    2.times do
+      game.game_board.valid_moves.each do |move|
+        if has_next_ttt(game, move, piece) 
+          return move
+        end
+      end
+      piece = TTTRules.opposite_piece(@piece)
+    end
+    return game.game_board.pick_random_move 
 	end
 end

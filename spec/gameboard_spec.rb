@@ -111,4 +111,19 @@ describe GameBoard do
       expect(gameboard.valid_moves.include?(1)).to be_falsey
     end
   end
+
+  describe '#pick_random_move' do
+    it 'gives a move from one of the valid moves' do
+      gameboard = GameBoard.new(1) 
+      expect(gameboard.pick_random_move).to eq(1)
+    end
+
+    it 'gives last remaining move' do
+      gameboard = GameBoard.new(2)
+      gameboard.place_piece(1,"O")
+      gameboard.place_piece(3,"X")
+      gameboard.place_piece(4,"O")
+      expect(gameboard.pick_random_move).to eq(2)
+    end
+  end
 end

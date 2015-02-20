@@ -23,4 +23,8 @@ class GameBoard
 		@num_pieces += 1
 		@valid_moves.delete(location)
 	end	
+
+  def pick_random_move
+    @valid_moves.sample
+  end
 end

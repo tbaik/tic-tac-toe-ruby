@@ -21,7 +21,7 @@ describe EasyAI do
       game.game_board.place_piece(2,"X")
       game.game_board.place_piece(8,"O")
 
-      piece_location = game.computer_player.best_move(game)
+      piece_location = game.computer_player.choose_move(game)
       expect(piece_location).to eq(3)
     end
   end
