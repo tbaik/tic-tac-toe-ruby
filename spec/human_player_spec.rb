@@ -1,4 +1,3 @@
-require 'human_player'
 require 'ttt_game'
 
 describe HumanPlayer do

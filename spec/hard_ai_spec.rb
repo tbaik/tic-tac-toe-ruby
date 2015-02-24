@@ -1,4 +1,3 @@
-require 'hard_ai'
 require 'ttt_game'
 
 describe HardAI do

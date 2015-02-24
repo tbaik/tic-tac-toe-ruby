@@ -1,9 +1,7 @@
 require "spec_helper"
 require "ttt_game"
 require "ttt_rules"
-require "human_player"
-require "hard_ai"
-require "gameboard"
+require "board/gameboard"
 
 describe GameBoard do
   

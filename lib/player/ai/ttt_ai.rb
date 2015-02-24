@@ -1,4 +1,4 @@
-require "./lib/player"
+require "./lib/player/player"
 
 class TTTAI < Player
   def initialize(piece)

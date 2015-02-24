@@ -1,5 +1,5 @@
 require "./lib/ttt_rules"
-require "./lib/ttt_ai"
+require "./lib/player/ai/ttt_ai"
 
 class HardAI < TTTAI
 	def initialize(piece)

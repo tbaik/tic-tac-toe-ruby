@@ -1,10 +1,10 @@
-require "./lib/gameboard"
-require "./lib/human_player"
-require "./lib/hard_ai"
-require "./lib/medium_ai"
-require "./lib/easy_ai"
+require "./lib/board/gameboard"
+require "./lib/player/human/human_player"
+require "./lib/player/ai/hard_ai"
+require "./lib/player/ai/medium_ai"
+require "./lib/player/ai/easy_ai"
 require "./lib/consoleio"
-require "./lib/board_presenter"
+require "./lib/board/board_presenter"
 require "./lib/winner_presenter"
 
 class TTTGame 

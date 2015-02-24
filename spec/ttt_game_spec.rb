@@ -1,7 +1,7 @@
 require "./lib/ttt_game"
-require "./lib/gameboard"
-require "./lib/human_player"
-require "./lib/hard_ai"
+require "./lib/board/gameboard"
+require "./lib/player/human/human_player"
+require "./lib/player/ai/hard_ai"
 require "./lib/ttt_rules"
 
 describe TTTGame do

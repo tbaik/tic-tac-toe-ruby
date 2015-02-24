@@ -1,7 +1,11 @@
-require 'new_ttt_receiver'
+require 'setup/new_ttt_receiver'
 require 'ttt_game'
 
 describe NewTTTReceiver do
+  it 'is initialized with io' do
+    expect{NewTTTReceiver.new(ConsoleIO)}.not_to raise_error
+  end
+
   let(:new_receiver) {NewTTTReceiver.new(ConsoleIO)}
   describe '#create_piece_turn_helper' do
     it 'gives us an array of X and true when 1' do

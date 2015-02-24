@@ -1,7 +1,7 @@
-require "ttt_game_creator"
-require "ttt_game_writer"
-require "ttt_game_reader"
-require 'new_ttt_receiver'
+require "setup/ttt_game_creator"
+require "readerwriter/ttt_game_writer"
+require "readerwriter/ttt_game_reader"
+require 'setup/new_ttt_receiver'
 require 'ttt_game'
 
 describe TTTGameCreator do

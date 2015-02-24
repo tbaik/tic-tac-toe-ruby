@@ -1,4 +1,4 @@
-require 'easy_ai'
+require 'player/ai/easy_ai'
 require 'ttt_game'
 
 describe EasyAI do

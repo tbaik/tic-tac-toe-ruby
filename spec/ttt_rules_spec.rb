@@ -1,8 +1,5 @@
 require "ttt_rules"
-require "gameboard"
-require "hard_ai"
-require "ttt_game"
-require "ttt_game_creator"
+require "board/gameboard"
 
 describe TTTRules do 
 	describe '#is_valid_move' do 

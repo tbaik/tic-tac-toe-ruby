@@ -1,4 +1,3 @@
-require 'medium_ai'
 require 'ttt_game'
 
 describe MediumAI do

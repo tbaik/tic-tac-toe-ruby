@@ -1,4 +1,4 @@
-require './lib/ttt_game_reader'
+require './lib/readerwriter/ttt_game_reader'
 require './lib/ttt_rules'
 require './lib/ttt_game'
 

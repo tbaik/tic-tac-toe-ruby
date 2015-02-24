@@ -1,5 +1,5 @@
-require "./lib/player"
-require "./lib/ttt_game_writer"
+require "./lib/player/player"
+require "./lib/readerwriter/ttt_game_writer"
 
 class HumanPlayer < Player
 

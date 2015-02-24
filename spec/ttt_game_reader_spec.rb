@@ -1,10 +1,10 @@
-require 'ttt_game_reader'
-require 'ttt_game_writer'
-require 'gameboard'
-require 'human_player'
+require 'readerwriter/ttt_game_reader'
+require 'readerwriter/ttt_game_writer'
+require 'board/gameboard'
+require 'player/human/human_player'
 require 'ttt_game'
-require 'easy_ai'
-require 'hard_ai'
+require 'player/ai/easy_ai'
+require 'player/ai/hard_ai'
 
 describe TTTGameReader do
   describe '#read_array_object' do

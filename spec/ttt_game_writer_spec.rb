@@ -1,8 +1,8 @@
 require 'ttt_game'
-require 'gameboard'
-require 'hard_ai'
-require 'human_player'
-require 'ttt_game_writer'
+require 'board/gameboard'
+require 'player/ai/hard_ai'
+require 'player/human/human_player'
+require 'readerwriter/ttt_game_writer'
 
 describe TTTGameWriter do
   describe '#write_game' do

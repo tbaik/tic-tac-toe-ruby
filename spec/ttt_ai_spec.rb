@@ -1,4 +1,4 @@
-require 'ttt_ai' 
+require 'player/ai/ttt_ai' 
 require 'ttt_game' 
 
 describe TTTAI do
