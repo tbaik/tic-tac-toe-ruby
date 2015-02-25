@@ -1,4 +1,6 @@
 require 'ttt_game'
+require 'consoleio'
+
 
 describe HumanPlayer do
   it 'should have same initial values' do
@@ -7,34 +9,19 @@ describe HumanPlayer do
   end
 
   describe '#choose_move' do
-    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), ConsoleIO, true)}	
+    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)}	
     
     it 'returns a piece_location according to user input' do 
-      expect(game.io).to receive(:print_message)
-      expect(game.io).to receive(:get_input).and_return("1")
+      expect(game.ui).to receive(:receive_human_turn_choice).and_return("1")
       expect(game.human_player.choose_move(game)).to eq(1) 
     end
 
     it 'makes you try again if move is not valid' do 
-      game.make_move(1,"O")
-      expect(game.io).to receive(:print_message).exactly(3).times
-      expect(game.io).to receive(:get_input).and_return("1","2")
+      game.make_move(1)
+      expect(game.ui).to receive(:receive_human_turn_choice).and_return("1","2")
       expect(game.human_player.choose_move(game)).to eq(2) 
     end
 
-    it 'exits on Q' do
-      expect(game.io).to receive(:print_message)
-      expect(game.io).to receive(:get_input).and_return("Q")
-      expect{game.human_player.choose_move(game)}.to raise_error SystemExit         
-    end
-
-    it 'writes a file and exits if you choose to save the game' do
-      expect(game.io).to receive(:print_message).exactly(2).times
-      expect(game.io).to receive(:get_input).and_return("S")
-      expect(game.io).to receive(:get_input).and_return("file2.txt")
-      expect{game.human_player.choose_move(game)}.to raise_error SystemExit      
-      File.delete("file2.txt") if File.exist? "file2.txt"
-    end
   end
 end
 

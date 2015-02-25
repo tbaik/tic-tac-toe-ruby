@@ -1,8 +1,9 @@
 require 'player/ai/easy_ai'
 require 'ttt_game'
+require 'consoleio'
 
 describe EasyAI do
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), ConsoleIO, false)}
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO), false)}
 
   it 'is initialized with piece string' do 
     expect(-> {EasyAI.new("X")}).not_to raise_error

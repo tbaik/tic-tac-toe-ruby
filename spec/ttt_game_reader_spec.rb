@@ -1,10 +1,7 @@
 require 'readerwriter/ttt_game_reader'
 require 'readerwriter/ttt_game_writer'
-require 'board/gameboard'
-require 'player/human/human_player'
 require 'ttt_game'
-require 'player/ai/easy_ai'
-require 'player/ai/hard_ai'
+require 'consoleio'
 
 describe TTTGameReader do
   describe '#read_array_object' do
@@ -52,23 +49,23 @@ describe TTTGameReader do
 
   describe '#read_is_player_turn' do
     it 'reads game object for is_player_turn and returns boolean true if true' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), ConsoleIO, true)	
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)	
       string = game.inspect
-      expect(TTTGameReader.read_is_player_turn(string.split("#")[4].split("@")[3])).to eq(true)
+      expect(TTTGameReader.read_is_player_turn(string.split("#")[5].split("@")[-2])).to eq(true)
     end
   end
 
   describe '#read_io' do
     it 'reads io constant from game object' do 
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), ConsoleIO, true)	
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)	
       string = game.inspect
-      expect(TTTGameReader.read_io(string.split("#")[4].split("@")[2])).to eq(ConsoleIO)
+      expect(TTTGameReader.read_io(string.split("#")[5].split("@")[1])).to eq(ConsoleIO)
     end
   end
 
   describe '#read_game' do
     it 'read file given a file_name and create game' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), ConsoleIO, true)	
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)	
       file_name = "test2.txt"
       TTTGameWriter.write_game(game,file_name)
       new_game_variables = TTTGameReader.read_game(file_name)
@@ -78,7 +75,7 @@ describe TTTGameReader do
       expect(new_game_variables[:hp_piece]).to eq(game.human_player.piece)
       expect(new_game_variables[:cp_piece]).to eq(game.computer_player.piece)
       expect(new_game_variables[:cp_class]).to eq(HardAI)
-      expect(new_game_variables[:io]).to eq(ConsoleIO)
+      expect(new_game_variables[:io]).to eq(game.ui.io)
       expect(new_game_variables[:is_player_turn]).to eq(game.is_player_turn)
 
       File.delete("test2.txt") if File.exist?("test2.txt")

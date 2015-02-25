@@ -60,7 +60,7 @@ class HardAI < TTTAI
 	def get_score(game, move, piece) 
 		new_game = game.clone
 		deep_copy_clone(new_game)
-		new_game.make_move(move, piece)
+		new_game.make_move(move)
 		minimax(new_game)
 	end
 	

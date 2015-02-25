@@ -40,8 +40,8 @@ class TTTGameReader
       gb_variables = read_game_board_variables(game_string[2])
       hp_piece = read_human_player_piece(game_string[3])
       cp_class = read_computer_player_class(game_string[4])
-      io = read_io(game_string[4].split("@")[2])
-      is_player_turn = read_is_player_turn(game_string[4].split("@")[3])
+      io = read_io(game_string[5].split("@")[1])
+      is_player_turn = read_is_player_turn(game_string[5].split("@")[-2])
       {:gb_variables => gb_variables, :hp_piece => hp_piece, 
         :cp_piece => TTTRules.opposite_piece(hp_piece), :cp_class => cp_class,
       :io => io, :is_player_turn => is_player_turn} 
