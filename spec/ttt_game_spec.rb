@@ -1,5 +1,5 @@
 require "./lib/ttt_game"
-require "./lib/consoleio"
+require "./lib/ui/consoleio"
 require "./lib/board/gameboard"
 require "./lib/player/human/human_player"
 require "./lib/player/ai/hard_ai"

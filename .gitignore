@@ -10,6 +10,7 @@
 /tmp/
 .rspec
 .DS_Store
+*.swp
 
 ## Specific to RubyMotion:
 .dat*

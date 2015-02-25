@@ -1,5 +1,5 @@
 require 'ttt_game'
-require 'consoleio'
+require 'ui/consoleio'
 require 'readerwriter/ttt_game_writer'
 
 describe TTTGameWriter do

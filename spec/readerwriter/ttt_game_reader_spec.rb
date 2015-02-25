@@ -1,7 +1,7 @@
 require 'readerwriter/ttt_game_reader'
 require 'readerwriter/ttt_game_writer'
 require 'ttt_game'
-require 'consoleio'
+require 'ui/consoleio'
 
 describe TTTGameReader do
   describe '#read_array_object' do

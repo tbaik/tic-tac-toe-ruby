@@ -1,5 +1,5 @@
 require 'ttt_game'
-require 'consoleio'
+require 'ui/consoleio'
 
 
 describe HumanPlayer do

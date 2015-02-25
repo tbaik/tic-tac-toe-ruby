@@ -1,5 +1,5 @@
 require 'ttt_game'
-require 'consoleio'
+require 'ui/consoleio'
 
 describe HardAI do
   let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), false)}

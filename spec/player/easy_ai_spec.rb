@@ -1,6 +1,6 @@
 require 'player/ai/easy_ai'
 require 'ttt_game'
-require 'consoleio'
+require 'ui/consoleio'
 
 describe EasyAI do
   let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO), false)}

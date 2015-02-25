@@ -1,8 +1,8 @@
 require "./lib/ttt_rules"
 require "./lib/ttt_game"
-require "./lib/setup/ttt_game_creator"
-require "./lib/ttt_ui"
-require "./lib/consoleio"
+require "./lib/ttt_game_creator"
+require "./lib/ui/ttt_ui"
+require "./lib/ui/consoleio"
 
 module GameLoop
 	def self.run_ttt_loop

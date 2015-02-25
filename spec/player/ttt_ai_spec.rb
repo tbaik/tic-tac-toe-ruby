@@ -1,6 +1,6 @@
 require 'player/ai/ttt_ai' 
 require 'ttt_game' 
-require 'consoleio' 
+require 'ui/consoleio' 
 
 describe TTTAI do
   it 'is initialized with piece' do

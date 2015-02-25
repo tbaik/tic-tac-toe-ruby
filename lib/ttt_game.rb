@@ -3,7 +3,7 @@ require "./lib/player/human/human_player"
 require "./lib/player/ai/hard_ai"
 require "./lib/player/ai/medium_ai"
 require "./lib/player/ai/easy_ai"
-require "./lib/ttt_ui"
+require "./lib/ui/ttt_ui"
 require "./lib/board/board_presenter"
 require "./lib/winner_presenter"
 

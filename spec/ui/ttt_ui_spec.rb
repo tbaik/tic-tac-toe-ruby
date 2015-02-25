@@ -1,7 +1,7 @@
-require 'consoleio'
+require 'ui/consoleio'
 require 'board/board_presenter'
 require 'board/gameboard'
-require 'ttt_ui'
+require 'ui/ttt_ui'
 require 'ttt_game'
 
 describe TTTUI do

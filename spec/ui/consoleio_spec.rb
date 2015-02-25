@@ -1,4 +1,4 @@
-require 'consoleio'
+require 'ui/consoleio'
 
 describe ConsoleIO do
   describe '#print_message' do

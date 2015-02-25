@@ -1,9 +1,9 @@
-require "setup/ttt_game_creator"
+require "ttt_game_creator"
 require "readerwriter/ttt_game_writer"
 require "readerwriter/ttt_game_reader"
 require 'ttt_game'
-require 'ttt_ui'
-require 'consoleio'
+require 'ui/ttt_ui'
+require 'ui/consoleio'
 
 describe TTTGameCreator do
 
