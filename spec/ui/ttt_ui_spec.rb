@@ -3,12 +3,21 @@ require 'board/board_presenter'
 require 'board/gameboard'
 require 'ui/ttt_ui'
 require 'ttt_game'
+require 'pig_latin_translator'
 
 describe TTTUI do
   let(:ui) {TTTUI.new(ConsoleIO)}
   let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)}	
+
   it 'is initialized with an io' do
     expect{TTTUI.new(ConsoleIO)}.not_to raise_error
+  end
+
+  describe '#receive_language_choice' do
+    it 'receives input 1 or 2 after prompting user' do
+      expect(ui.io).to receive(:get_input).and_return("1")
+      expect{ui.receive_language_choice}.to output("Type 1 for English and 2 for Pig Latin!\n").to_stdout
+    end
   end
 
   describe '#receive_human_turn_choice' do
@@ -36,8 +45,7 @@ describe TTTUI do
 
   describe '#print_invalid_move_error' do
     it 'prints that the move is invalid' do
-      expect(ui.io).to receive(:print_message)
-      ui.print_invalid_move_error
+      expect{ui.print_invalid_move_error}.to output(ui.invalid_move_error + "\n").to_stdout
     end
   end
 
@@ -194,5 +202,12 @@ describe TTTUI do
       end
     end
 
+    describe '#translate' do
+      it 'translates instance variable strings in the class through given translator' do
+        ui.translate(PigLatinTranslator)
+        expect(ui.ask_human_turn).to eq("Erehay'say ethay Amegay Oardbay. Easeplay etypay anway emptyway iecepay ocationlay umbernay otay aceplay away iecepay.\nIfway ouyay ishway otay Uitqay, etypay Qay. Ifway ouyay ishway otay Avesay andway Uitqay, etypay Say.")
+        expect(ui.invalid_move_error).to eq("Invalidway ovemay. Tryay Againway!")
+      end
+    end
   end
 end

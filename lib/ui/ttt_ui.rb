@@ -2,10 +2,25 @@ require "./lib/board/board_presenter"
 require "./lib/readerwriter/ttt_game_writer"
 
 class TTTUI
-  attr_accessor :io
+  attr_reader :io, :ask_human_turn, :invalid_move_error
+  ASK_LANGUAGE = "Type 1 for English and 2 for Pig Latin!"
 
   def initialize(io)
     @io = io
+    set_english_strings
+  end
+
+  def receive_language_choice
+    @io.print_message(ASK_LANGUAGE)
+    choice = @io.get_input
+    if choice == "1" || choice == "2"
+      return choice
+    else
+      receive_language_choice
+    end
+  end
+
+  def set_english_strings
     @ask_human_turn = "Here's the Game Board. Please type an empty piece location number to place a piece.\n" +
       "If you wish to Quit, type Q. If you wish to Save and Quit, type S."
     @invalid_move_error = "Invalid move. Try Again!"
@@ -136,5 +151,11 @@ class TTTUI
       @io.print_message(@invalid_file_name)
       receive_read_file_name
     end
+  end
+
+  def translate(translator)
+    self.instance_variables[1..-1].each do |string_var|
+      self.instance_variable_set(string_var, translator.translate_string(self.instance_variable_get(string_var)))  
+    end 
   end
 end

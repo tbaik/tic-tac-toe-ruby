@@ -16,6 +16,7 @@ describe TTTGameCreator do
 
   describe '#new_game' do
     it 'records user input and creates appropriate game out of it' do
+      expect(ui).to receive(:receive_language_choice).and_return("1")
       expect(ui).to receive(:receive_read_or_new_game).and_return("1")
       expect(ui).to receive(:receive_piece_and_turn).and_return(["O",true])
       expect(ui).to receive(:receive_difficulty).and_return(EasyAI)

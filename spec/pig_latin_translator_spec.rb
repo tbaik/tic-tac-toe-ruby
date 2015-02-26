@@ -81,53 +81,34 @@ describe PigLatinTranslator do
     end
   end
 
-  describe 'is_integer?' do
-    it 'returns true if the string is just purely integer' do
-      string = "1234"
-      expect(plt.is_integer?(string)).to eq(true)
-    end
-
-    it 'returns false if the string is not purely integer' do
-      string = "13g4" 
-      expect(plt.is_integer?(string)).to eq(false)
-    end
-  end
-
-  describe 'is_punctuation?' do
-    it 'returns true if string is a punctuation' do
-      string = ","
-      expect(plt.is_punctuation?(string)).to eq(true)
-    end
-  end
-
-  describe 'is_not_a_word?' do
+  describe '#not_a_word?' do
     it 'returns true for integer' do
       string = "123"
-      expect(plt.is_not_a_word?(string)).to eq(true)
+      expect(plt.not_a_word?(string)).to eq(true)
     end  
 
     it 'returns true for punctuation' do
       string = ","
-      expect(plt.is_not_a_word?(string)).to eq(true)
+      expect(plt.not_a_word?(string)).to eq(true)
     end
 
     it 'returns true for empty string' do
       string = ""
-      expect(plt.is_not_a_word?(string)).to eq(true)
+      expect(plt.not_a_word?(string)).to eq(true)
       string = " "
-      expect(plt.is_not_a_word?(string)).to eq(true)
+      expect(plt.not_a_word?(string)).to eq(true)
     end
 
     it 'returns true for next line character' do
       string = "\n"
-      expect(plt.is_not_a_word?(string)).to eq(true)
+      expect(plt.not_a_word?(string)).to eq(true)
     end
   end
 
-  describe 'is_capitalized?' do
+  describe '#capitalized?' do
     it 'returns true if string is capitalized' do
       string = "Hello"
-      expect(plt.is_capitalized?(string)).to eq(true)
+      expect(plt.capitalized?(string)).to eq(true)
     end
   end
 end
