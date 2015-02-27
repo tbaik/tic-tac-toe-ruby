@@ -171,6 +171,18 @@ describe TTTUI do
         expect(ui.ask_human_turn).to eq("Erehay'say ethay Amegay Oardbay. Easeplay etypay anway emptyway iecepay ocationlay umbernay otay aceplay away iecepay.\nIfway ouyay ishway otay Uitqay, etypay Qay. Ifway ouyay ishway otay Avesay andway Uitqay, etypay Say.")
         expect(ui.invalid_move_error).to eq("Invalidway ovemay. Tryay Againway!")
       end
+      
+      it 'sets instance variable translator as the translator given' do
+        expect(ui.translator).to eq(nil)
+        ui.translate(PigLatinTranslator)
+        expect(ui.translator).to eq(PigLatinTranslator)
+      end
+
+      it 'sets is_foreign_language boolean to true' do
+        expect(ui.is_foreign_language).to eq(false)
+        ui.translate(PigLatinTranslator)
+        expect(ui.is_foreign_language).to eq(true)
+      end
     end
   end
 end
