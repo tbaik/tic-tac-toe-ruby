@@ -36,9 +36,10 @@ class TTTGameCreator
     piece_and_turn = @ui.receive_piece_and_turn
     cp_class = @ui.receive_difficulty
     gb_size = @ui.receive_board_size
+    rules = TTTRules
     {:gb_size => gb_size, :hp_piece => piece_and_turn[0],
-      :cp_piece => TTTRules.opposite_piece(piece_and_turn[0]), 
-      :cp_class => cp_class, :is_player_turn => piece_and_turn[1]}
+      :cp_piece => rules.opposite_piece(piece_and_turn[0]), 
+      :cp_class => cp_class, :is_player_turn => piece_and_turn[1], :rules => rules}
   end
 
   def create_new_game(variables_hash)
@@ -53,6 +54,7 @@ class TTTGameCreator
     hp = HumanPlayer.new(variables_hash[:hp_piece])
     cp = variables_hash[:cp_class].new(variables_hash[:cp_piece])
     is_player_turn = variables_hash[:is_player_turn]
-    TTTGame.new(gb,hp,cp,@ui,is_player_turn)
+    rules = variables_hash[:rules]
+    TTTGame.new(gb,hp,cp,@ui,is_player_turn,rules)
   end
 end

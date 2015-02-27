@@ -2,7 +2,7 @@ require 'ui/winner_presenter'
 require 'ttt_game'
 
 describe WinnerPresenter do
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), ConsoleIO, true)	}
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), ConsoleIO, true, TTTRules)	}
 
   it 'gives us tie string on a tie game' do 
     expect(WinnerPresenter.winner_string(false, game)).to eq("It's a tie!" + "\n--------------------------------------------------------------") 

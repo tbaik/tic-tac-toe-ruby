@@ -12,7 +12,7 @@ class HumanPlayer < Player
     
     if command?(piece_location) 
       process_command(piece_location, game)
-    elsif TTTRules.is_valid_move?(piece_location,game.game_board)
+    elsif game.rules.is_valid_move?(piece_location,game.game_board)
       return piece_location.to_i
     else
       game.ui.print_invalid_move_error

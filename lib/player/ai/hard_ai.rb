@@ -32,7 +32,7 @@ class HardAI < TTTAI
 	# We do this by simulating gameplay through all possible moves and comparing the results
 	# taking into consideration whose turn it is. 
 	def minimax(game)
-		has_winner = TTTRules.has_winner(game.game_board)
+		has_winner = game.rules.has_winner(game.game_board)
 		if !has_winner
 			return 1 if game.game_board.num_pieces == game.game_board.board.size 
 			score = 0
@@ -72,7 +72,7 @@ class HardAI < TTTAI
           return move
         end
       end
-      piece = TTTRules.opposite_piece(@piece)
+      piece = game.rules.opposite_piece(@piece)
     end
     return game.game_board.pick_random_move 
   end

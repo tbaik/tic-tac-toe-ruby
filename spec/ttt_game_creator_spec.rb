@@ -33,13 +33,14 @@ describe TTTGameCreator do
       expect(game.computer_player.piece).to eq("X")
       expect(game.computer_player.class).to eq(EasyAI.new("X").class)
       expect(game.is_player_turn).to eq(true)
+      expect(game.rules).to eq(TTTRules)
     end
   end
 
   describe '#create_new_game' do
     it 'takes a variable hash and creates a new game with gb_size' do
       variables_hash = {:gb_size => 3, :hp_piece => "O", :cp_piece => "X", :cp_class => EasyAI, 
-         :is_player_turn => true} 
+         :is_player_turn => true, :rules => TTTRules} 
       game = ttt_creator.create_new_game(variables_hash)
       expect(game.game_board.board).to eq(["1","2","3","4","5","6","7","8","9"])
       expect(game.game_board.valid_moves.size).to eq(9)
@@ -48,13 +49,14 @@ describe TTTGameCreator do
       expect(game.computer_player.piece).to eq("X")
       expect(game.computer_player.class).to eq(EasyAI.new("X").class)
       expect(game.is_player_turn).to eq(true)
+      expect(game.rules).to eq(TTTRules)
     end
 
     it 'takes a variable hash and creates a new game with gb_variables' do
       variables_hash = {:gb_variables => {:board => ["X","2","3","4","5","6","7","8","9"], 
         :num_pieces => 1, :valid_moves => [2,3,4,5,6,7,8,9]},
         :hp_piece => "O", :cp_piece => "X", :cp_class => EasyAI, 
-        :is_player_turn => true} 
+        :is_player_turn => true, :rules => TTTRules} 
       game = ttt_creator.create_new_game(variables_hash)
       expect(game.game_board.board).to eq(["X","2","3","4","5","6","7","8","9"])
       expect(game.game_board.valid_moves.size).to eq(8)
@@ -63,6 +65,7 @@ describe TTTGameCreator do
       expect(game.computer_player.piece).to eq("X")
       expect(game.computer_player.class).to eq(EasyAI.new("X").class)
       expect(game.is_player_turn).to eq(true)
+      expect(game.rules).to eq(TTTRules)
     end
   end
 
@@ -79,12 +82,13 @@ describe TTTGameCreator do
       expect(variables_hash[:cp_piece]).to eq("X")
       expect(variables_hash[:cp_class]).to eq(EasyAI)
       expect(variables_hash[:is_player_turn]).to eq(true)
+      expect(variables_hash[:rules]).to eq(TTTRules)
     end
   end
 
   describe '#read_game_variables' do
     it 'loads and reads the saved game and turns it into correct hash of variables' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)
       TTTGameWriter.write_game(game, "test_read.txt")
       expect(ui).to receive(:receive_read_file_name).and_return("test_read.txt")
       variables_hash = ttt_creator.read_game_variables
@@ -96,6 +100,7 @@ describe TTTGameCreator do
       expect(variables_hash[:cp_piece]).to eq(game.computer_player.piece)
       expect(variables_hash[:cp_class]).to eq(EasyAI)
       expect(variables_hash[:is_player_turn]).to eq(game.is_player_turn)
+      expect(variables_hash[:rules]).to eq(game.rules)
 
       File.delete("test_read.txt") if File.exist?("test_read.txt")
     end

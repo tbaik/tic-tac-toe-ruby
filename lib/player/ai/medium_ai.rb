@@ -13,7 +13,7 @@ class MediumAI < TTTAI
           return move
         end
       end
-      piece = TTTRules.opposite_piece(@piece)
+      piece = game.rules.opposite_piece(@piece)
     end
     return game.game_board.pick_random_move 
 	end

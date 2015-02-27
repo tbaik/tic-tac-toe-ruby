@@ -5,7 +5,7 @@ require 'ui/input_processor'
 
 
 describe HumanPlayer do
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}	
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}	
   let(:player) {HumanPlayer.new("O")}
   it 'should have same initial values' do
     expect(player.piece).to eq("O")
@@ -59,6 +59,3 @@ describe HumanPlayer do
     end
   end
 end
-
-
-

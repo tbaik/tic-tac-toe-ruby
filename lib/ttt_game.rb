@@ -8,15 +8,16 @@ require "./lib/board/board_presenter"
 require "./lib/ui/winner_presenter"
 
 class TTTGame 
-	attr_accessor :game_board, :human_player, :computer_player, :ui, :is_player_turn, :current_player
+	attr_accessor :game_board, :human_player, :computer_player, :ui, :is_player_turn, :current_player, :rules
 
-	def initialize(game_board, human_player, computer_player, ui, is_player_turn)
+	def initialize(game_board, human_player, computer_player, ui, is_player_turn, rules)
 		@game_board = game_board
 		@human_player = human_player
     @computer_player = computer_player 
     @ui = ui
     @is_player_turn = is_player_turn
     decide_current_player
+    @rules = rules
   end
 
   def play  
@@ -28,7 +29,7 @@ class TTTGame
       @ui.print_piece_placed(@is_player_turn, @current_player.piece, piece_location.to_s)
       make_move(piece_location)
       @ui.print_gameboard(@game_board.board)
-      has_winner = TTTRules.has_winner(@game_board)
+      has_winner = rules.has_winner(@game_board)
     end
     @ui.print_winner(has_winner, self)
   end

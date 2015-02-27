@@ -10,7 +10,7 @@ describe TTTAI do
   end
 
   describe '#has_next_ttt' do
-    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}
+    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}
     it 'returns true for a move and piece that will give a tictactoe' do
       game.make_move(1) 
       game.make_move(4) 
@@ -28,7 +28,7 @@ describe TTTAI do
   end
 
   describe 'cloning a new game' do
-    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)}
+    let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)}
     let(:newgame) do 
       newgame = game.clone
       newgame.computer_player.deep_copy_clone(newgame)

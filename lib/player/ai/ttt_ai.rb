@@ -12,7 +12,7 @@ class TTTAI < Player
 		new_game = game.clone
 		deep_copy_clone(new_game)
 		new_game.game_board.place_piece(move,piece)
-		TTTRules.has_winner_eval(new_game.game_board)
+		game.rules.has_winner_eval(new_game.game_board)
 	end
 
   def deep_copy_clone(new_game)

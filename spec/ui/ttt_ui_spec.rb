@@ -9,7 +9,7 @@ require 'ui/input_processor'
 
 describe TTTUI do
   let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}	
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}	
 
   it 'is initialized with an io' do
     expect{TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}.not_to raise_error

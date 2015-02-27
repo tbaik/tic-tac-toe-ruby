@@ -51,15 +51,15 @@ describe TTTGameReader do
 
   describe '#read_is_player_turn' do
     it 'reads game object for is_player_turn and returns boolean true if true' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)	
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
       string = game.inspect
-      expect(TTTGameReader.read_is_player_turn(string.split("#")[5].split("@")[-2])).to eq(true)
+      expect(TTTGameReader.read_is_player_turn(string.split("#")[5])).to eq(true)
     end
   end
 
   describe '#read_game' do
     it 'read file given a file_name and create game' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)	
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
       file_name = "test2.txt"
       TTTGameWriter.write_game(game,file_name)
       new_game_variables = TTTGameReader.read_game(file_name)
@@ -70,6 +70,7 @@ describe TTTGameReader do
       expect(new_game_variables[:cp_piece]).to eq(game.computer_player.piece)
       expect(new_game_variables[:cp_class]).to eq(HardAI)
       expect(new_game_variables[:is_player_turn]).to eq(game.is_player_turn)
+      expect(new_game_variables[:rules]).to eq(game.rules)
 
       File.delete("test2.txt") if File.exist?("test2.txt")
     end
@@ -82,6 +83,14 @@ describe TTTGameReader do
     
     it 'excludes numbers' do
       expect(TTTGameReader.read_line_for_words("io=12345io\n")).to eq("io")
+    end
+  end
+
+  describe '#read_rules' do
+    it 'reads TTTRules when given rule is TTTRules' do
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
+      string = game.inspect
+      expect(TTTGameReader.read_rules(string.split("#")[6])).to eq(TTTRules)
     end
   end
 

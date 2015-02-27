@@ -9,11 +9,11 @@ require "./lib/ttt_rules"
 
 describe TTTGame do
 	let(:game) do 
-		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)	
+		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
 	end
   
 	it 'should initialize with gameboard, human player, computer player, io, and is_player_turn' do
-    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}.not_to raise_error
+    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}.not_to raise_error
 	end
 
   describe '#decide_current_player' do
@@ -22,7 +22,7 @@ describe TTTGame do
     end
 
     it 'sets current_player to computer_player if is_player_turn is false' do
-		  game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)	
+		  game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)	
       expect(game2.current_player).to eq(game2.computer_player)
     end
   end
@@ -48,7 +48,7 @@ describe TTTGame do
       expect(game.ui).to receive(:print_winner).exactly(1).times
       expect(game.human_player).to receive(:choose_move).exactly(5).times.and_return(1,9,8,3,4)
       expect(game.computer_player).to receive(:choose_move).exactly(4).times.and_return(5,2,7,6)
-      expect(TTTRules).to receive(:has_winner).exactly(9).times.and_return(false)
+      expect(game.rules).to receive(:has_winner).exactly(9).times.and_return(false)
       game.play
     end
 
@@ -58,12 +58,12 @@ describe TTTGame do
       expect(game.ui).to receive(:print_winner).exactly(1).times
       expect(game.human_player).to receive(:choose_move).exactly(3).times.and_return(1,2,4)
       expect(game.computer_player).to receive(:choose_move).exactly(3).times.and_return(5,3,7)
-      expect(TTTRules).to receive(:has_winner).exactly(6).times.and_return(false,false,false,false,false,true)
+      expect(game.rules).to receive(:has_winner).exactly(6).times.and_return(false,false,false,false,false,true)
       game.play
     end
 
     it 'prints board once in the beginning, once after turn. print once for piece placed, once for winner' do
-      new_game = TTTGame.new(GameBoard.new(1), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)
+      new_game = TTTGame.new(GameBoard.new(1), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)
       expect(new_game.ui).to receive(:print_gameboard) 
       expect(new_game.human_player).to receive(:choose_move).and_return(1)
       expect(new_game.ui).to receive(:print_piece_placed)
@@ -74,7 +74,7 @@ describe TTTGame do
   end
 
   describe '#make_move' do
-    let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)}	
+    let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)}	
 
     it 'places piece on the correct spot in the game board ' do
       new_game.make_move(1)
