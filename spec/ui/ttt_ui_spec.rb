@@ -4,13 +4,15 @@ require 'board/gameboard'
 require 'ui/ttt_ui'
 require 'ttt_game'
 require 'pig_latin_translator'
+require 'ui/input_checker'
+require 'ui/input_processor'
 
 describe TTTUI do
-  let(:ui) {TTTUI.new(ConsoleIO)}
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)}	
+  let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}	
 
   it 'is initialized with an io' do
-    expect{TTTUI.new(ConsoleIO)}.not_to raise_error
+    expect{TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}.not_to raise_error
   end
 
   describe '#receive_language_choice' do
@@ -24,23 +26,8 @@ describe TTTUI do
     it 'asks user for input and grabs the input from user' do
       expect(ui.io).to receive(:print_message)
       expect(ui.io).to receive(:get_input)
-      ui.receive_human_turn_choice(game)
+      ui.receive_human_turn_choice
     end
-
-    it 'exits on Q' do
-      expect(ui.io).to receive(:print_message)
-      expect(ui.io).to receive(:get_input).and_return("Q")
-      expect{ui.receive_human_turn_choice(game)}.to raise_error SystemExit         
-    end
-
-    it 'writes a file and exits if you choose to save the game' do
-      expect(ui.io).to receive(:print_message).exactly(2).times
-      expect(ui.io).to receive(:get_input).and_return("S")
-      expect(ui.io).to receive(:get_input).and_return("file2.txt")
-      expect{ui.receive_human_turn_choice(game)}.to raise_error SystemExit      
-      File.delete("file2.txt") if File.exist? "file2.txt"
-    end
-
   end
 
   describe '#print_invalid_move_error' do
@@ -89,15 +76,15 @@ describe TTTUI do
       is_player_turn = true
       piece = "X"
       piece_location = 1
- 
+
       expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Player placed X on 1\n").to_stdout
     end
-   
+
     it 'has expected computer player output according to its parameters' do
       is_player_turn = false
       piece = "O"
       piece_location = 5
- 
+
       expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Computer placed O on 5\n").to_stdout
     end
 
@@ -112,42 +99,6 @@ describe TTTUI do
   end
 
   describe 'GameCreator UI' do
-    describe '#create_piece_turn_helper' do
-      it 'gives us an array of X and true when 1' do
-        expect(ui.create_piece_turn_helper("1")).to eq(["X",true])
-      end
-
-      it 'gives us an array of O and false when 2' do
-        expect(ui.create_piece_turn_helper("2")).to eq(["O",false])
-      end
-
-      it 'exits program when 3' do
-        expect{ui.create_piece_turn_helper("3")}.to raise_error SystemExit
-      end
-
-      it 'gives nil on any other input' do
-        expect(ui.create_piece_turn_helper("blah")).to eq(nil)
-      end
-    end  
-
-    describe '#determine_difficulty' do
-      it 'gives back EasyAI when 1' do
-        expect(ui.determine_difficulty("1")).to eq(EasyAI)
-      end
-
-      it 'gives back MediumAI when 2' do
-        expect(ui.determine_difficulty("2")).to eq(MediumAI)
-      end
-
-      it 'gives back HardAI when 3' do
-        expect(ui.determine_difficulty("3")).to eq(HardAI)
-      end
-
-      it 'gives nil on any other input' do
-        expect(ui.determine_difficulty("blah")).to eq(nil)
-      end
-    end
-
     describe '#receive_difficulty' do
       it 'returns EasyAI on user input 1' do
         expect(ui.io).to receive(:print_message)

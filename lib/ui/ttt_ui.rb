@@ -2,11 +2,13 @@ require "./lib/board/board_presenter"
 require "./lib/readerwriter/ttt_game_writer"
 
 class TTTUI
-  attr_reader :io, :ask_human_turn, :invalid_move_error, :is_foreign_language, :translator
+  attr_reader :io, :input_processor, :input_checker, :ask_human_turn, :invalid_move_error, :is_foreign_language, :translator
   ASK_LANGUAGE = "Type 1 for English and 2 for Pig Latin!"
 
-  def initialize(io)
+  def initialize(io, input_processor, input_checker)
     @io = io
+    @input_processor = input_processor
+    @input_checker = input_checker
     @ask_human_turn = "Here's the Game Board. Please type an empty piece location number to place a piece.\n" +
       "If you wish to Quit, type Q. If you wish to Save and Quit, type S."
     @invalid_move_error = "Invalid move. Try Again!"
@@ -23,24 +25,16 @@ class TTTUI
   def receive_language_choice
     @io.print_message(ASK_LANGUAGE)
     choice = @io.get_input
-    if choice == "1" || choice == "2"
+    if @input_checker.valid_language_input?(choice)
       return choice
     else
       receive_language_choice
     end
   end
 
-  def receive_human_turn_choice(game)
+  def receive_human_turn_choice
     @io.print_message(@ask_human_turn)
-    piece_location = @io.get_input
-
-    if piece_location == "Q"
-      exit
-    elsif piece_location == "S"
-      TTTGameWriter.save_game(game)
-    else
-      return piece_location
-    end
+    @io.get_input
   end
 
   def print_invalid_move_error
@@ -90,7 +84,7 @@ class TTTUI
   def receive_board_size
     @io.print_message(@ask_board_size)
     gb_size = @io.get_input
-    if !gb_size.nil? && (gb_size.to_i > 2 && gb_size.to_i < 6)
+    if @input_checker.valid_board_size?(gb_size) 
       return gb_size
     else
       receive_board_size
@@ -99,7 +93,7 @@ class TTTUI
 
   def receive_piece_and_turn
     @io.print_message(@ask_turn)
-    piece_and_turn = create_piece_turn_helper(@io.get_input)
+    piece_and_turn = @input_processor.process_piece_and_turn_input(@io.get_input)
     if !piece_and_turn.nil?	
       return piece_and_turn
     else
@@ -107,22 +101,9 @@ class TTTUI
     end
   end
 
-  def create_piece_turn_helper(turn)
-    case turn
-    when "1"
-      return ["X", true]
-    when "2"
-      return ["O", false]
-    when "3"
-      exit
-    else
-      nil
-    end
-  end
-
   def receive_difficulty
     @io.print_message(@ask_difficulty)
-    difficulty = determine_difficulty(@io.get_input)
+    difficulty = @input_processor.process_difficulty_input(@io.get_input)
     if !difficulty.nil? 
       return difficulty
     else
@@ -130,23 +111,10 @@ class TTTUI
     end
   end
 
-  def determine_difficulty(difficulty)
-    case difficulty
-    when "1"
-      EasyAI
-    when "2"
-      MediumAI
-    when "3"
-      HardAI
-    else
-      nil
-    end	
-  end
-
   def receive_read_or_new_game
     @io.print_message(@ask_read_or_new_game)				
     choice = @io.get_input
-    if choice == "1" || choice == "2"
+    if @input_checker.valid_read_or_new_game_input?(choice) 
       return choice
     else
       receive_read_or_new_game
@@ -156,7 +124,7 @@ class TTTUI
   def receive_read_file_name
     @io.print_message(@ask_file_name)
     file_name = @io.get_input
-    if File.file?(file_name) 
+    if @input_checker.valid_file_name?(file_name) 
       return file_name 
     else
       @io.print_message(@invalid_file_name)
@@ -167,7 +135,7 @@ class TTTUI
   def translate(translator)
     @translator = translator
     @is_foreign_language = true
-    self.instance_variables[1..-3].each do |string_var|
+    self.instance_variables[3..-3].each do |string_var|
       self.instance_variable_set(string_var, @translator.translate_string(self.instance_variable_get(string_var)))  
     end 
   end

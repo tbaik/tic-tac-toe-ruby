@@ -1,5 +1,7 @@
 require "./lib/ttt_game"
 require "./lib/ui/consoleio"
+require "./lib/ui/input_processor"
+require "./lib/ui/input_checker"
 require "./lib/board/gameboard"
 require "./lib/player/human/human_player"
 require "./lib/player/ai/hard_ai"
@@ -7,11 +9,11 @@ require "./lib/ttt_rules"
 
 describe TTTGame do
 	let(:game) do 
-		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)	
+		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)	
 	end
   
 	it 'should initialize with gameboard, human player, computer player, io, and is_player_turn' do
-    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)}.not_to raise_error
+    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)}.not_to raise_error
 	end
 
   describe '#decide_current_player' do
@@ -20,7 +22,7 @@ describe TTTGame do
     end
 
     it 'sets current_player to computer_player if is_player_turn is false' do
-		  game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), false)	
+		  game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)	
       expect(game2.current_player).to eq(game2.computer_player)
     end
   end
@@ -61,7 +63,7 @@ describe TTTGame do
     end
 
     it 'prints board once in the beginning, once after turn. print once for piece placed, once for winner' do
-      new_game = TTTGame.new(GameBoard.new(1), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), true)
+      new_game = TTTGame.new(GameBoard.new(1), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true)
       expect(new_game.ui).to receive(:print_gameboard) 
       expect(new_game.human_player).to receive(:choose_move).and_return(1)
       expect(new_game.ui).to receive(:print_piece_placed)
@@ -72,7 +74,7 @@ describe TTTGame do
   end
 
   describe '#make_move' do
-    let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), false)}	
+    let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)}	
 
     it 'places piece on the correct spot in the game board ' do
       new_game.make_move(1)

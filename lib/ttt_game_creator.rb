@@ -38,8 +38,7 @@ class TTTGameCreator
     gb_size = @ui.receive_board_size
     {:gb_size => gb_size, :hp_piece => piece_and_turn[0],
       :cp_piece => TTTRules.opposite_piece(piece_and_turn[0]), 
-      :cp_class => cp_class, :io => @ui.io,
-      :is_player_turn => piece_and_turn[1]}
+      :cp_class => cp_class, :is_player_turn => piece_and_turn[1]}
   end
 
   def create_new_game(variables_hash)

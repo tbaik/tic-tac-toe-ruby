@@ -1,8 +1,10 @@
 require 'ttt_game'
 require 'ui/consoleio'
+require 'ui/input_checker'
+require 'ui/input_processor'
 
 describe HardAI do
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO), false)}
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)}
   #O is human, X is computer. X goes first.
 
   it 'is initialized with piece string' do 
@@ -34,7 +36,7 @@ describe HardAI do
     end
 
     it 'chooses middle location for at least a tie game' do
-      ngame = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      ngame = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       ngame.make_move(1) 
 
       piece_location = ngame.computer_player.best_move(ngame)
@@ -44,13 +46,13 @@ describe HardAI do
 
   describe '#choose_move' do
     it 'calls medium_move when there are more than 9 available spaces' do
-      new_game = TTTGame.new(GameBoard.new(4), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      new_game = TTTGame.new(GameBoard.new(4), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       expect(new_game.computer_player).to receive(:medium_move)
       new_game.computer_player.choose_move(new_game)
     end
 
     it 'calls best_move when there are less than 9 available spaces' do
-      new_game = TTTGame.new(GameBoard.new(4), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      new_game = TTTGame.new(GameBoard.new(4), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       new_game.make_move(1)
       new_game.make_move(2)
       new_game.make_move(3)
@@ -65,7 +67,7 @@ describe HardAI do
 
   describe '#get_score' do
     it 'should get a score of 2 if game is winnable with this move' do
-      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       new_game.make_move(2)
       new_game.make_move(5)
       new_game.make_move(8)
@@ -73,13 +75,13 @@ describe HardAI do
     end
 
     it 'should get a score of 1 if game is at max a tie with this move' do
-      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       new_game.make_move(1)
       expect(new_game.computer_player.get_score(new_game, 5, "O")).to eq(1)
     end
 
     it 'should get a score of 0 if game leads to a loss with this move' do
-      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO), true) #X is human, O is computer, X goes first
+      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true) #X is human, O is computer, X goes first
       new_game.make_move(1)
       expect(new_game.computer_player.get_score(new_game, 2, "O")).to eq(0)
     end

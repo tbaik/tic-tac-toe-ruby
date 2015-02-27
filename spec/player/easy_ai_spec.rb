@@ -1,9 +1,11 @@
 require 'player/ai/easy_ai'
 require 'ttt_game'
 require 'ui/consoleio'
+require 'ui/input_checker'
+require 'ui/input_processor'
 
 describe EasyAI do
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO), false)}
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false)}
 
   it 'is initialized with piece string' do 
     expect(-> {EasyAI.new("X")}).not_to raise_error
