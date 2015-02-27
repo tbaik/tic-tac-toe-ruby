@@ -6,10 +6,4 @@ describe ConsoleIO do
       expect{ConsoleIO.print_message("hello world")}.to output("hello world\n").to_stdout
     end
   end
-  
-  describe '#get_input' do
-    it 'returns a string that the user types' do
-      skip
-    end
-  end
 end

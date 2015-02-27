@@ -75,8 +75,12 @@ describe TTTUI do
 
   describe '#print_winner' do
     it 'prints the string from the winner presenter' do
-      expect(WinnerPresenter).to receive(:winner_string).with(true, game)
-      ui.print_winner(true, game)
+      expect{ui.print_winner(true,game)}.to output("The Computer won as X!\n--------------------------------------------------------------\n").to_stdout
+    end
+
+    it 'prints piglatin if translated as piglatin' do
+      ui.translate(PigLatinTranslator)
+      expect{ui.print_winner(true,game)}.to output("Ethay Omputercay onway asway Xay!\n--------------------------------------------------------------\n").to_stdout
     end
   end
 
@@ -95,6 +99,14 @@ describe TTTUI do
       piece_location = 5
  
       expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Computer placed O on 5\n").to_stdout
+    end
+
+    it 'has pig latin output when translated into pig latin' do
+      is_player_turn = false
+      piece = "O"
+      piece_location = 5
+      ui.translate(PigLatinTranslator) 
+      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("Ethay Omputercay acedplay Oway onway 5\n").to_stdout
     end
 
   end

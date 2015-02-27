@@ -2,12 +2,22 @@ require "./lib/board/board_presenter"
 require "./lib/readerwriter/ttt_game_writer"
 
 class TTTUI
-  attr_reader :io, :ask_human_turn, :invalid_move_error
+  attr_reader :io, :ask_human_turn, :invalid_move_error, :is_foreign_language, :translator
   ASK_LANGUAGE = "Type 1 for English and 2 for Pig Latin!"
 
   def initialize(io)
     @io = io
-    set_english_strings
+    @ask_human_turn = "Here's the Game Board. Please type an empty piece location number to place a piece.\n" +
+      "If you wish to Quit, type Q. If you wish to Save and Quit, type S."
+    @invalid_move_error = "Invalid move. Try Again!"
+    @ask_file_name = "Please type the name of the save file:"
+    @invalid_file_name = "Invalid file name!"
+    @ask_board_size = "Please select a Game Board size: 3x3(3), 4x4(4), or 5x5(5)"
+    @ask_turn = "Hello! Let's play a game of tic-tac-toe against a computer!\nPlease type 1 to go First(X), 2 to go Second(O), or 3 to exit"
+    @ask_difficulty = "Choose the difficulty of the Computer: Easy(1), Medium(2), or Hard(3)"
+    @ask_read_or_new_game = "Welcome to Tic-Tac-Toe! If you would like to start a new game, please type 1. If you would like to load a save file, please type 2."
+    @is_foreign_language = false
+    @translator = nil
   end
 
   def receive_language_choice
@@ -18,18 +28,6 @@ class TTTUI
     else
       receive_language_choice
     end
-  end
-
-  def set_english_strings
-    @ask_human_turn = "Here's the Game Board. Please type an empty piece location number to place a piece.\n" +
-      "If you wish to Quit, type Q. If you wish to Save and Quit, type S."
-    @invalid_move_error = "Invalid move. Try Again!"
-    @ask_file_name = "Please type the name of the save file:"
-    @invalid_file_name = "Invalid file name!"
-    @ask_board_size = "Please select a Game Board size: 3x3(3), 4x4(4), or 5x5(5)"
-    @ask_turn = "Hello! Let's play a game of tic-tac-toe against a computer!\nPlease type 1 to go First(X), 2 to go Second(O), or 3 to exit"
-    @ask_difficulty = "Choose the difficulty of the Computer: Easy(1), Medium(2), or Hard(3)"
-    @ask_read_or_new_game = "Welcome to Tic-Tac-Toe! If you would like to start a new game, please type 1. If you would like to load a save file, please type 2."
   end
 
   def receive_human_turn_choice(game)
@@ -65,15 +63,28 @@ class TTTUI
   end
 
   def print_winner(has_winner, game)
-    @io.print_message(WinnerPresenter.winner_string(has_winner, game)) 
+    output_string = ""
+    if @is_foreign_language
+      output_string = @translator.translate_string(WinnerPresenter.winner_string(has_winner, game))
+    else
+      output_string = WinnerPresenter.winner_string(has_winner, game)
+    end
+    @io.print_message(output_string) 
   end
 
   def print_piece_placed(is_player_turn, piece, piece_location)
+    output_string = ""
     if is_player_turn
-      @io.print_message("The Player placed " + piece + " on " + piece_location.to_s)
+      output_string = "The Player placed " + piece + " on " + piece_location.to_s
     else
-      @io.print_message("The Computer placed " + piece + " on " + piece_location.to_s)
+      output_string = "The Computer placed " + piece + " on " + piece_location.to_s
     end
+
+    if @is_foreign_language
+      output_string = @translator.translate_string(output_string)
+    end
+
+    @io.print_message(output_string)
   end
 
   def receive_board_size
@@ -154,8 +165,10 @@ class TTTUI
   end
 
   def translate(translator)
-    self.instance_variables[1..-1].each do |string_var|
-      self.instance_variable_set(string_var, translator.translate_string(self.instance_variable_get(string_var)))  
+    @translator = translator
+    @is_foreign_language = true
+    self.instance_variables[1..-3].each do |string_var|
+      self.instance_variable_set(string_var, @translator.translate_string(self.instance_variable_get(string_var)))  
     end 
   end
 end
