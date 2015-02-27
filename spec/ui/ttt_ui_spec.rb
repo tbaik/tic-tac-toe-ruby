@@ -99,23 +99,11 @@ describe TTTUI do
   end
 
   describe 'GameCreator UI' do
-    describe '#receive_difficulty' do
-      it 'returns EasyAI on user input 1' do
+    describe '#receive_board_size' do
+      it 'returns same input as given' do
         expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("1")
-        expect(ui.receive_difficulty).to eq(EasyAI)
-      end
-
-      it 'returns MediumAI on user input 2' do
-        expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("2")
-        expect(ui.receive_difficulty).to eq(MediumAI)
-      end
-
-      it 'returns HardAI on user input 3' do
-        expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("3")
-        expect(ui.receive_difficulty).to eq(HardAI)
+        expect(ui.io).to receive(:get_input).and_return("4")
+        expect(ui.receive_board_size).to eq("4")
       end
     end
 
@@ -139,11 +127,31 @@ describe TTTUI do
       end
     end
 
-    describe '#receive_board_size' do
-      it 'returns same input as given' do
+    describe '#receive_difficulty' do
+      it 'returns EasyAI on user input 1' do
         expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("4")
-        expect(ui.receive_board_size).to eq("4")
+        expect(ui.io).to receive(:get_input).and_return("1")
+        expect(ui.receive_difficulty).to eq(EasyAI)
+      end
+
+      it 'returns MediumAI on user input 2' do
+        expect(ui.io).to receive(:print_message)
+        expect(ui.io).to receive(:get_input).and_return("2")
+        expect(ui.receive_difficulty).to eq(MediumAI)
+      end
+
+      it 'returns HardAI on user input 3' do
+        expect(ui.io).to receive(:print_message)
+        expect(ui.io).to receive(:get_input).and_return("3")
+        expect(ui.receive_difficulty).to eq(HardAI)
+      end
+    end
+
+    describe '#receive_read_or_new_game' do
+      it 'returns 1 on user input 1' do
+        expect(ui.io).to receive(:print_message)
+        expect(ui.io).to receive(:get_input).and_return("1")
+        expect(ui.receive_read_or_new_game).to eq("1")
       end
     end
 
@@ -157,21 +165,13 @@ describe TTTUI do
       end
     end
 
-    describe '#receive_read_or_new_game' do
-      it 'returns 1 on user input 1' do
-        expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("1")
-        expect(ui.receive_read_or_new_game).to eq("1")
-      end
-    end
-
     describe '#translate' do
       it 'translates instance variable strings in the class through given translator' do
         ui.translate(PigLatinTranslator)
         expect(ui.ask_human_turn).to eq("Erehay'say ethay Amegay Oardbay. Easeplay etypay anway emptyway iecepay ocationlay umbernay otay aceplay away iecepay.\nIfway ouyay ishway otay Uitqay, etypay Qay. Ifway ouyay ishway otay Avesay andway Uitqay, etypay Say.")
         expect(ui.invalid_move_error).to eq("Invalidway ovemay. Tryay Againway!")
       end
-      
+
       it 'sets instance variable translator as the translator given' do
         expect(ui.translator).to eq(nil)
         ui.translate(PigLatinTranslator)

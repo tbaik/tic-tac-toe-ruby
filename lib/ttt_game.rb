@@ -51,5 +51,4 @@ class TTTGame
     @is_player_turn = !@is_player_turn
     decide_current_player
   end
-
 end

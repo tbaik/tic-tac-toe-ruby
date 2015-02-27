@@ -6,17 +6,22 @@ require 'ui/input_checker'
 require 'ui/input_processor'
 
 describe TTTGameReader do
-  describe '#read_array_object' do
-    it 'reads string array object back into normal string array' do
-      array = ["1","2","3","4","O","X","7","8","9","10"]
-      string = array.inspect
-      expect(TTTGameReader.read_array_object(string).map(&:to_s)).to eq(array)
-    end
+  describe '#read_game' do
+    it 'read file given a file_name and create game' do
+      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
+      file_name = "test2.txt"
+      TTTGameWriter.write_game(game,file_name)
+      new_game_variables = TTTGameReader.read_game(file_name)
+      expect(new_game_variables[:gb_variables][:board]).to eq(game.game_board.board)
+      expect(new_game_variables[:gb_variables][:num_pieces]).to eq(game.game_board.num_pieces)
+      expect(new_game_variables[:gb_variables][:valid_moves]).to eq(game.game_board.valid_moves)
+      expect(new_game_variables[:hp_piece]).to eq(game.human_player.piece)
+      expect(new_game_variables[:cp_piece]).to eq(game.computer_player.piece)
+      expect(new_game_variables[:cp_class]).to eq(HardAI)
+      expect(new_game_variables[:is_player_turn]).to eq(game.is_player_turn)
+      expect(new_game_variables[:rules]).to eq(game.rules)
 
-    it 'reads int array object back into normal int array' do
-      array = [1,2,3,4,5]
-      string = array.inspect
-      expect(TTTGameReader.read_array_object(string).map(&:to_i)).to eq(array)
+      File.delete("test2.txt") if File.exist?("test2.txt")
     end
   end
 
@@ -57,22 +62,25 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_game' do
-    it 'read file given a file_name and create game' do
+  describe '#read_rules' do
+    it 'reads TTTRules when given rule is TTTRules' do
       game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
-      file_name = "test2.txt"
-      TTTGameWriter.write_game(game,file_name)
-      new_game_variables = TTTGameReader.read_game(file_name)
-      expect(new_game_variables[:gb_variables][:board]).to eq(game.game_board.board)
-      expect(new_game_variables[:gb_variables][:num_pieces]).to eq(game.game_board.num_pieces)
-      expect(new_game_variables[:gb_variables][:valid_moves]).to eq(game.game_board.valid_moves)
-      expect(new_game_variables[:hp_piece]).to eq(game.human_player.piece)
-      expect(new_game_variables[:cp_piece]).to eq(game.computer_player.piece)
-      expect(new_game_variables[:cp_class]).to eq(HardAI)
-      expect(new_game_variables[:is_player_turn]).to eq(game.is_player_turn)
-      expect(new_game_variables[:rules]).to eq(game.rules)
+      string = game.inspect
+      expect(TTTGameReader.read_rules(string.split("#")[6])).to eq(TTTRules)
+    end
+  end
 
-      File.delete("test2.txt") if File.exist?("test2.txt")
+  describe '#read_array_object' do
+    it 'reads string array object back into normal string array' do
+      array = ["1","2","3","4","O","X","7","8","9","10"]
+      string = array.inspect
+      expect(TTTGameReader.read_array_object(string).map(&:to_s)).to eq(array)
+    end
+
+    it 'reads int array object back into normal int array' do
+      array = [1,2,3,4,5]
+      string = array.inspect
+      expect(TTTGameReader.read_array_object(string).map(&:to_i)).to eq(array)
     end
   end
 
@@ -83,14 +91,6 @@ describe TTTGameReader do
     
     it 'excludes numbers' do
       expect(TTTGameReader.read_line_for_words("io=12345io\n")).to eq("io")
-    end
-  end
-
-  describe '#read_rules' do
-    it 'reads TTTRules when given rule is TTTRules' do
-      game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
-      string = game.inspect
-      expect(TTTGameReader.read_rules(string.split("#")[6])).to eq(TTTRules)
     end
   end
 

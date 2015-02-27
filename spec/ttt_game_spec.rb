@@ -8,37 +8,12 @@ require "./lib/player/ai/hard_ai"
 require "./lib/ttt_rules"
 
 describe TTTGame do
-	let(:game) do 
-		game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
-	end
-  
-	it 'should initialize with gameboard, human player, computer player, io, and is_player_turn' do
-    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}.not_to raise_error
-	end
-
-  describe '#decide_current_player' do
-    it 'sets current_player to human_player if is_player_turn' do
-      expect(game.current_player).to eq(game.human_player)
-    end
-
-    it 'sets current_player to computer_player if is_player_turn is false' do
-		  game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)	
-      expect(game2.current_player).to eq(game2.computer_player)
-    end
+  let(:game) do 
+    game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
   end
 
-  describe '#changeTurn' do
-    it 'changes current player to opposite player' do
-      expect(game.current_player).to eq(game.human_player)
-      game.changeTurn 
-      expect(game.current_player).to eq(game.computer_player)
-    end
-
-    it 'changes is_player_turn to opposite boolean' do
-      old_turn = game.is_player_turn
-      game.changeTurn
-      expect(old_turn).to eq(!game.is_player_turn)
-    end
+  it 'should initialize with gameboard, human player, computer player, io, and is_player_turn' do
+    expect{TTTGame.new(GameBoard.new(4), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}.not_to raise_error
   end
 
   describe '#play' do
@@ -73,6 +48,17 @@ describe TTTGame do
     end
   end
 
+  describe '#decide_current_player' do
+    it 'sets current_player to human_player if is_player_turn' do
+      expect(game.current_player).to eq(game.human_player)
+    end
+
+    it 'sets current_player to computer_player if is_player_turn is false' do
+      game2 = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)	
+      expect(game2.current_player).to eq(game2.computer_player)
+    end
+  end
+
   describe '#make_move' do
     let(:new_game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)}	
 
@@ -85,6 +71,20 @@ describe TTTGame do
       old_turn = new_game.is_player_turn
       new_game.make_move(2)
       expect(new_game.is_player_turn).to eq(!old_turn) 
+    end
+  end
+
+  describe '#changeTurn' do
+    it 'changes current player to opposite player' do
+      expect(game.current_player).to eq(game.human_player)
+      game.changeTurn 
+      expect(game.current_player).to eq(game.computer_player)
+    end
+
+    it 'changes is_player_turn to opposite boolean' do
+      old_turn = game.is_player_turn
+      game.changeTurn
+      expect(old_turn).to eq(!game.is_player_turn)
     end
   end
 end
