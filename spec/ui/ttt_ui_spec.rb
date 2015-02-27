@@ -3,7 +3,7 @@ require 'board/board_presenter'
 require 'board/gameboard'
 require 'ui/ttt_ui'
 require 'ttt_game'
-require 'pig_latin_translator'
+require 'ui/pig_latin_translator'
 require 'ui/input_checker'
 require 'ui/input_processor'
 

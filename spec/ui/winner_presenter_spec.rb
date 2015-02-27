@@ -1,4 +1,4 @@
-require 'winner_presenter'
+require 'ui/winner_presenter'
 require 'ttt_game'
 
 describe WinnerPresenter do

@@ -4,7 +4,7 @@ class TTTGameWriter
   class << self
     def save_game(game)
       file_name = game.ui.receive_save_file_name
-      TTTGameWriter.write_game(game, file_name)
+      write_game(game, file_name)
       exit
     end
 

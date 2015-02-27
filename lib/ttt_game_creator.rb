@@ -1,7 +1,7 @@
 require './lib/readerwriter/ttt_game_reader'
 require './lib/ttt_rules'
 require './lib/ttt_game'
-require './lib/pig_latin_translator'
+require './lib/ui/pig_latin_translator'
 
 class TTTGameCreator
   attr_reader :ui
