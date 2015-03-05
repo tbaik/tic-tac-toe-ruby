@@ -7,7 +7,7 @@ Features include:
 - 3x3, 4x4, or 5x5 Game Board.
 - Easy, Medium, and Hard Computer players
 - Save and Load games
-- Languages: English, Pig Latin
+- Languages: English, Pig Latin, Spanish
 
 To start the game:
 
