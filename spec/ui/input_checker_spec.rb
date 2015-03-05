@@ -3,14 +3,15 @@ require 'ui/input_checker.rb'
 describe InputChecker do
   let(:input_checker) {InputChecker}
   describe '#valid_language_input?' do
-    it 'returns true on string of 1 or 2' do
+    it 'returns true on string of 1 or 2 or 3' do
       expect(input_checker.valid_language_input?("1")).to eq(true)
       expect(input_checker.valid_language_input?("2")).to eq(true)
+      expect(input_checker.valid_language_input?("3")).to eq(true)
     end
 
     it 'returns false on other strings' do
       expect(input_checker.valid_language_input?("Q")).to eq(false)
-      expect(input_checker.valid_language_input?("3")).to eq(false)
+      expect(input_checker.valid_language_input?("4")).to eq(false)
       expect(input_checker.valid_language_input?("")).to eq(false)
     end
   end

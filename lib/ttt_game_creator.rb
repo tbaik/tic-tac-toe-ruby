@@ -11,10 +11,7 @@ class TTTGameCreator
   end
 
   def new_game
-    language_choice = @ui.receive_language_choice
-    if language_choice == "2"
-      @ui.translate(PigLatinTranslator)
-    end
+    @ui.determine_language
 
     choice = @ui.receive_read_or_new_game
     variables_hash = {}

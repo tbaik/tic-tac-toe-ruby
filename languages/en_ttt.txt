@@ -1,0 +1,13 @@
+ask_human_turn=Here's the Game Board. Please type an empty piece location number to place a piece. If you wish to Quit, type Q. If you wish to Save and Quit, type S.
+invalid_move_error=Invalid move. Try Again!
+ask_file_name=Please type the name of the save file:
+invalid_file_name=Invalid file name!
+ask_board_size=Please select a Game Board size: 3x3(3), 4x4(4), or 5x5(5)
+ask_turn=Hello! Let's play a game of tic-tac-toe against a computer! Please type 1 to go First(X), 2 to go Second(O), or 3 to exit
+ask_difficulty=Choose the difficulty of the Computer: Easy(1), Medium(2), or Hard(3)
+ask_read_or_new_game=Welcome to Tic-Tac-Toe! If you would like to start a new game, please type 1. If you would like to load a save file, please type 2.
+winner_tie=It's a tie
+winner_computer=The Computer won as 
+winner_human=The Player won as 
+placed_computer=The Computer placed 
+placed_human=The Player placed 

@@ -15,10 +15,11 @@ describe TTTUI do
     expect{TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}.not_to raise_error
   end
 
-  describe '#receive_language_choice' do
-    it 'receives input 1 or 2 after prompting user' do
+  describe '#determine_language' do
+    it 'receives 1 for english and sets text as english' do
       expect(ui.io).to receive(:get_input).and_return("1")
-      expect{ui.receive_language_choice}.to output("Type 1 for English and 2 for Pig Latin!\n").to_stdout
+      expect{ui.determine_language}.to output("Type 1 for English and 2 for Pig Latin, and 3 for Spanish!\n").to_stdout
+      expect(ui.text[:invalid_file_name]).to eq("Invalid file name!")
     end
   end
 
@@ -32,7 +33,7 @@ describe TTTUI do
 
   describe '#print_invalid_move_error' do
     it 'prints that the move is invalid' do
-      expect{ui.print_invalid_move_error}.to output(ui.invalid_move_error + "\n").to_stdout
+      expect{ui.print_invalid_move_error}.to output(ui.text[:invalid_move_error] + "\n").to_stdout
     end
   end
 
@@ -64,11 +65,6 @@ describe TTTUI do
     it 'prints the string from the winner presenter' do
       expect{ui.print_winner(true,game)}.to output("The Computer won as X!\n--------------------------------------------------------------\n").to_stdout
     end
-
-    it 'prints piglatin if translated as piglatin' do
-      ui.translate(PigLatinTranslator)
-      expect{ui.print_winner(true,game)}.to output("Ethay Omputercay onway asway Xay!\n--------------------------------------------------------------\n").to_stdout
-    end
   end
 
   describe '#print_piece_placed' do
@@ -77,7 +73,7 @@ describe TTTUI do
       piece = "X"
       piece_location = 1
 
-      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Player placed X on 1\n").to_stdout
+      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Player placed X @ 1\n").to_stdout
     end
 
     it 'has expected computer player output according to its parameters' do
@@ -85,17 +81,8 @@ describe TTTUI do
       piece = "O"
       piece_location = 5
 
-      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Computer placed O on 5\n").to_stdout
+      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("The Computer placed O @ 5\n").to_stdout
     end
-
-    it 'has pig latin output when translated into pig latin' do
-      is_player_turn = false
-      piece = "O"
-      piece_location = 5
-      ui.translate(PigLatinTranslator) 
-      expect{ui.print_piece_placed(is_player_turn, piece, piece_location)}.to output("Ethay Omputercay acedplay Oway onway 5\n").to_stdout
-    end
-
   end
 
   describe 'GameCreator UI' do
@@ -162,26 +149,6 @@ describe TTTUI do
         expect(ui.io).to receive(:get_input).and_return("test1.txt")
         expect(ui.receive_read_file_name).to eq("test1.txt")
         File.delete("test1.txt") if File.exist?("test1.txt")
-      end
-    end
-
-    describe '#translate' do
-      it 'translates instance variable strings in the class through given translator' do
-        ui.translate(PigLatinTranslator)
-        expect(ui.ask_human_turn).to eq("Erehay'say ethay Amegay Oardbay. Easeplay etypay anway emptyway iecepay ocationlay umbernay otay aceplay away iecepay.\nIfway ouyay ishway otay Uitqay, etypay Qay. Ifway ouyay ishway otay Avesay andway Uitqay, etypay Say.")
-        expect(ui.invalid_move_error).to eq("Invalidway ovemay. Tryay Againway!")
-      end
-
-      it 'sets instance variable translator as the translator given' do
-        expect(ui.translator).to eq(nil)
-        ui.translate(PigLatinTranslator)
-        expect(ui.translator).to eq(PigLatinTranslator)
-      end
-
-      it 'sets is_foreign_language boolean to true' do
-        expect(ui.is_foreign_language).to eq(false)
-        ui.translate(PigLatinTranslator)
-        expect(ui.is_foreign_language).to eq(true)
       end
     end
   end

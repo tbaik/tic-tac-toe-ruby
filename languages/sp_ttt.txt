@@ -1,0 +1,13 @@
+ask_human_turn=Aquí está el juego de mesa. Por favor, escriba un número de pieza ubicación vacía para colocar una pieza. Si desea dejar de fumar, tipo Q. Si desea Guardar y Salir, tipo S.
+invalid_move_error=Movimiento válido. Inténtalo De Nuevo!
+ask_file_name=Por favor escriba el nombre del archivo de guardado:
+invalid_file_name=Nombre de archivo no válido!
+ask_board_size=Seleccione un tamaño Juego de mesa: 3x3(3), 4x4(4), o 5x5(5)
+ask_turn=Hola! Vamos a jugar un juego de tic-tac-dedo del pie contra una computadora! Por favor, escriba 1 para ir Primero (X), 2 para ir Segundo (O), o 3 para salir
+ask_difficulty=Seleccione la dificultad del ordenador: Fácil (1), Medio (2), o Duro (3)
+ask_read_or_new_game=Bienvenido a Tic-Tac-Toe! Si desea iniciar un nuevo juego, por favor escriba 1. Si desea cargar un archivo de salvar, por favor escriba 2.
+winner_tie=Es un empate
+winner_computer=El ordenador ganó como 
+winner_human=El jugador ganó como 
+placed_computer=El ordenador colocado 
+placed_human=El jugador colocado  

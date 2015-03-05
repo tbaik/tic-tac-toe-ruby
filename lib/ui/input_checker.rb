@@ -1,7 +1,7 @@
 class InputChecker
   class << self
     def valid_language_input?(input)
-      return input == "1" || input == "2"
+      return input == "1" || input == "2" || input == "3"
     end 
 
     def valid_board_size?(input)

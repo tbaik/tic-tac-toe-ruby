@@ -5,7 +5,6 @@ require "./lib/player/ai/medium_ai"
 require "./lib/player/ai/easy_ai"
 require "./lib/ui/ttt_ui"
 require "./lib/board/board_presenter"
-require "./lib/ui/winner_presenter"
 
 class TTTGame 
 	attr_accessor :game_board, :human_player, :computer_player, :ui, :is_player_turn, :current_player, :rules
