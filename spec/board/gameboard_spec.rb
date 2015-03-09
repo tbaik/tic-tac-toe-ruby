@@ -4,7 +4,6 @@ require "ttt_rules"
 require "board/gameboard"
 
 describe GameBoard do
-  
   it 'allows you to initialize with just gb_size' do
     expect{GameBoard.new(3)}.not_to raise_error
   end
@@ -122,6 +121,17 @@ describe GameBoard do
       gameboard.place_piece(3,"X")
       gameboard.place_piece(4,"O")
       expect(gameboard.pick_random_move).to eq(2)
+    end
+  end
+
+  describe '#board_length' do
+    it 'returns the same length of the board as when initialized' do
+      gameboard2 = GameBoard.new(2)
+      gameboard3 = GameBoard.new(3)
+      gameboard5 = GameBoard.new(5)
+      expect(gameboard2.board_length).to eq(2)
+      expect(gameboard3.board_length).to eq(3)
+      expect(gameboard5.board_length).to eq(5)
     end
   end
 end

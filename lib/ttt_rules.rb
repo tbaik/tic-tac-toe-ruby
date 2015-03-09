@@ -10,80 +10,72 @@ module TTTRules
     end
 
     def has_winner(game_board)
-      return false if game_board.num_pieces < ((Math.sqrt(game_board.board.size) * 2) - 1) 
-      has_vertical_winner(game_board.board) || has_horizontal_winner(game_board.board) || has_diagonal_winner(game_board.board)
+      length = game_board.board_length.to_i
+      return false if game_board.num_pieces < ((length * 2) - 1) 
+      has_vertical_winner(game_board.board, length) || has_horizontal_winner(game_board.board, length) || has_diagonal_winner(game_board.board, length)
     end
 
-    def has_vertical_winner(board)
-      length = Math.sqrt(board.size).to_i	
-
-      length.times do |i|
-        num = i
-        bool = true
-        while num < board.size-length
-          if board[num] != board[num+length]	
-            bool = false
-          end
-          num += length
-        end
-        if bool
-          return true
-        end
+    def has_vertical_winner(board, length)
+      length.times do |column_start_space|
+        return true if column_contains_same_pieces?(board, column_start_space, length) 
       end
-      false
+      return false
     end
 
-    def has_horizontal_winner(board)
-      num = 0
-      length = Math.sqrt(board.size).to_i
-      while num < board.size
-        bool = true 
-        (length - 1).times do |i|
-          if board[num] != board[num+i+1]
-            bool = false	
-          end
-        end
-        if bool
-          return true
-        else
-          num += length
-        end
+    def has_horizontal_winner(board, length)
+      row_start_space = 0
+      while row_start_space < board.size
+        return true if row_contains_same_pieces?(board, row_start_space, length)
+        row_start_space += length
       end
-      false
+      return false
     end
 
-    def has_diagonal_winner(board)
-      length = Math.sqrt(board.size).to_i
-      num = 0
-      bool = true
-      while num < board.size - length
-        if board[num] != board[num+1+length]
-          bool = false
-        end
-        num += length + 1
-      end	
-      if bool
+    def has_diagonal_winner(board, length)
+      left_diagonal_starting_space = 0
+      right_diagonal_starting_space = length - 1
+      if diagonal_contains_same_pieces?(board, left_diagonal_starting_space, length+1) || diagonal_contains_same_pieces?(board, right_diagonal_starting_space, length-1)
         return true
       end
+      return false
+    end
 
-      num = length-1
-      bool = true
-      while num < board.size - length
-        if board[num] != board[num-1+length]
-          bool = false
+    def column_contains_same_pieces?(board, column_space, length)
+      while column_space < board.size - length
+        if board[column_space] != board[column_space+length]
+          return false
         end
-        num += length - 1
+        column_space += length
       end
-      if bool
-        return true
+      return true
+    end
+
+    def row_contains_same_pieces?(board, row_space, length)
+      (length - 1).times do
+        if board[row_space] != board[row_space+1]
+          return false
+        end
+        row_space += 1
       end
-      false
+      return true
+    end
+
+    def diagonal_contains_same_pieces?(board, diagonal_space, length_to_next_space)
+      length = Math.sqrt(board.size)
+      while diagonal_space < board.size - length
+        if board[diagonal_space] != board[diagonal_space + length_to_next_space]
+          return false
+        end
+        diagonal_space += length_to_next_space
+      end
+      return true
     end
 
     # for computer player's move evaluation. (requires 1 more level of lookahead)
     def has_winner_eval(game_board)
-      return false if game_board.num_pieces < ((Math.sqrt(game_board.board.size) * 2) - 1)-1 
-      has_vertical_winner(game_board.board) || has_horizontal_winner(game_board.board) || has_diagonal_winner(game_board.board)
+      length = game_board.board_length.to_i
+      return false if game_board.num_pieces < ((length * 2) - 2) 
+      has_vertical_winner(game_board.board, length) || has_horizontal_winner(game_board.board, length) || has_diagonal_winner(game_board.board, length)
     end
   end
 end

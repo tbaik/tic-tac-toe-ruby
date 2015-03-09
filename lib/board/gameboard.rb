@@ -27,4 +27,8 @@ class GameBoard
   def pick_random_move
     @valid_moves.sample
   end
+
+  def board_length
+    Math.sqrt(@board.size)
+  end
 end
