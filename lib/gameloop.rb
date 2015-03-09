@@ -1,10 +1,10 @@
-require "./lib/ttt_rules"
-require "./lib/ttt_game"
-require "./lib/ttt_game_creator"
-require "./lib/ui/ttt_ui"
-require "./lib/ui/consoleio"
-require "./lib/ui/input_processor"
-require "./lib/ui/input_checker"
+require_relative "ttt_rules"
+require_relative "ttt_game"
+require_relative "ttt_game_creator"
+require_relative "ui/ttt_ui"
+require_relative "ui/consoleio"
+require_relative "ui/input_processor"
+require_relative "ui/input_checker"
 
 module GameLoop
 	def self.run_ttt_loop

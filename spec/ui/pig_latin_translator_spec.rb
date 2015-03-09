@@ -1,4 +1,4 @@
-require 'ui/pig_latin_translator'
+require_relative '../../lib/ui/pig_latin_translator'
 
 describe PigLatinTranslator do
   let(:plt) {PigLatinTranslator}

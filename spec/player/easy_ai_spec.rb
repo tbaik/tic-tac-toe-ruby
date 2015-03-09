@@ -1,8 +1,8 @@
-require 'player/ai/easy_ai'
-require 'ttt_game'
-require 'ui/consoleio'
-require 'ui/input_checker'
-require 'ui/input_processor'
+require_relative '../../lib/player/ai/easy_ai'
+require_relative '../../lib/ttt_game'
+require_relative '../../lib/ui/consoleio'
+require_relative '../../lib/ui/input_checker'
+require_relative '../../lib/ui/input_processor'
 
 describe EasyAI do
   let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), EasyAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), false, TTTRules)}

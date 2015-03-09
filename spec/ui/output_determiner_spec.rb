@@ -1,6 +1,6 @@
-require 'ui/output_determiner.rb'
-require 'ui/consoleio'
-require 'ttt_game'
+require_relative '../../lib/ui/output_determiner.rb'
+require_relative '../../lib/ui/consoleio'
+require_relative '../../lib/ttt_game'
 
 describe OutputDeterminer do
   let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), ConsoleIO, true, TTTRules)	}

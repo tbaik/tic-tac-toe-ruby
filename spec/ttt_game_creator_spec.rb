@@ -1,11 +1,11 @@
-require "ttt_game_creator"
-require "readerwriter/ttt_game_writer"
-require "readerwriter/ttt_game_reader"
-require 'ttt_game'
-require 'ui/ttt_ui'
-require 'ui/consoleio'
-require 'ui/input_checker'
-require 'ui/input_processor'
+require_relative "../lib/ttt_game_creator"
+require_relative "../lib/readerwriter/ttt_game_writer"
+require_relative "../lib/readerwriter/ttt_game_reader"
+require_relative '../lib/ttt_game'
+require_relative '../lib/ui/ttt_ui'
+require_relative '../lib/ui/consoleio'
+require_relative '../lib/ui/input_checker'
+require_relative '../lib/ui/input_processor'
 
 describe TTTGameCreator do
   let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}

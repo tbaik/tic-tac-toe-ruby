@@ -1,4 +1,4 @@
-require './lib/ttt_game'
+require_relative '../ttt_game'
 
 class TTTGameWriter
   class << self
@@ -10,7 +10,7 @@ class TTTGameWriter
 
     def write_game(game, file_name)
       game_string = game.inspect
-      File.write(file_name, game_string)		
+      File.write(file_name, game_string)
     end
   end
 end

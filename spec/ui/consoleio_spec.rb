@@ -1,4 +1,4 @@
-require 'ui/consoleio'
+require_relative '../../lib/ui/consoleio'
 
 describe ConsoleIO do
   describe '#print_message' do

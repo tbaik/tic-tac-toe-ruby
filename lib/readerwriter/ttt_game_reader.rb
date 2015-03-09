@@ -1,5 +1,4 @@
-require './lib/ttt_game'
-require './lib/player/human/human_player'
+require_relative '../ttt_game'
 
 class TTTGameReader 
   class << self

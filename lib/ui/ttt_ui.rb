@@ -1,6 +1,6 @@
-require "./lib/board/board_presenter"
-require "./lib/readerwriter/ttt_game_writer"
-require "./lib/ui/output_determiner"
+require_relative "../board/board_presenter"
+require_relative "../readerwriter/ttt_game_writer"
+require_relative "output_determiner"
 
 class TTTUI
   attr_reader :io, :input_processor, :input_checker, :text 
@@ -103,7 +103,7 @@ class TTTUI
 
   def receive_read_file_name
     @io.print_message(@text[:ask_file_name])
-    file_name = @io.get_input
+    file_name = File.expand_path(("../../../" + @io.get_input), __FILE__)
     if @input_checker.valid_file_name?(file_name) 
       return file_name 
     else

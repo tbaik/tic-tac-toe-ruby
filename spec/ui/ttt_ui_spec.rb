@@ -1,11 +1,11 @@
-require 'ui/consoleio'
-require 'board/board_presenter'
-require 'board/gameboard'
-require 'ui/ttt_ui'
-require 'ttt_game'
-require 'ui/pig_latin_translator'
-require 'ui/input_checker'
-require 'ui/input_processor'
+require_relative '../../lib/ui/consoleio'
+require_relative '../../lib/board/board_presenter'
+require_relative '../../lib/board/gameboard'
+require_relative '../../lib/ui/ttt_ui'
+require_relative '../../lib/ttt_game'
+require_relative '../../lib/ui/pig_latin_translator'
+require_relative '../../lib/ui/input_checker'
+require_relative '../../lib/ui/input_processor'
 
 describe TTTUI do
   let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}
@@ -144,11 +144,12 @@ describe TTTUI do
 
     describe '#receive_read_file_name' do
       it 'returns file name if file exists' do
-        File.write("test1.txt", "nothing special")
+        path = File.expand_path("../../../test1.txt", __FILE__)
+        File.write(path, "nothing special")
         expect(ui.io).to receive(:print_message)
         expect(ui.io).to receive(:get_input).and_return("test1.txt")
-        expect(ui.receive_read_file_name).to eq("test1.txt")
-        File.delete("test1.txt") if File.exist?("test1.txt")
+        expect(ui.receive_read_file_name).to eq(path)
+        File.delete(path) if File.exist?(path)
       end
     end
   end

@@ -1,4 +1,4 @@
-require 'ui/input_checker.rb'
+require_relative '../../lib/ui/input_checker.rb'
 
 describe InputChecker do
   let(:input_checker) {InputChecker}

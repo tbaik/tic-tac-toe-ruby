@@ -1,11 +1,11 @@
-require "./lib/ttt_game"
-require "./lib/ui/consoleio"
-require "./lib/ui/input_processor"
-require "./lib/ui/input_checker"
-require "./lib/board/gameboard"
-require "./lib/player/human/human_player"
-require "./lib/player/ai/hard_ai"
-require "./lib/ttt_rules"
+require_relative "../lib/ttt_game"
+require_relative "../lib/ui/consoleio"
+require_relative "../lib/ui/input_processor"
+require_relative "../lib/ui/input_checker"
+require_relative "../lib/board/gameboard"
+require_relative "../lib/player/human/human_player"
+require_relative "../lib/player/ai/hard_ai"
+require_relative "../lib/ttt_rules"
 
 describe TTTGame do
   let(:game) do 

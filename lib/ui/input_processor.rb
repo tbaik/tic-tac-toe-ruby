@@ -1,7 +1,7 @@
-require './lib/player/ai/easy_ai'
-require './lib/player/ai/medium_ai'
-require './lib/player/ai/hard_ai'
-require './lib/ui/pig_latin_translator'
+require_relative '../player/ai/easy_ai'
+require_relative '../player/ai/medium_ai'
+require_relative '../player/ai/hard_ai'
+require_relative 'pig_latin_translator'
 
 class InputProcessor
   class << self
@@ -34,15 +34,15 @@ class InputProcessor
     def process_language_input(input)
       case input
       when "1"
-        return parse_language_file("languages/en_ttt.txt")
+        return parse_language_file(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
       when "2"
-        hash = parse_language_file("languages/en_ttt.txt")
+        hash = parse_language_file(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
         hash.each do |key,value|
           hash[key] = PigLatinTranslator.translate_string(value)
         end
         return hash
       when "3"
-        return parse_language_file("languages/sp_ttt.txt")
+        return parse_language_file(File.expand_path("../../../languages/sp_ttt.txt", __FILE__))
       end
     end
 

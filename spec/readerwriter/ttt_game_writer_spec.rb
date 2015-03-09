@@ -1,8 +1,8 @@
-require 'ttt_game'
-require 'ui/consoleio'
-require 'readerwriter/ttt_game_writer'
-require 'ui/input_checker'
-require 'ui/input_processor'
+require_relative '../../lib/ttt_game'
+require_relative '../../lib/ui/consoleio'
+require_relative '../../lib/readerwriter/ttt_game_writer'
+require_relative '../../lib/ui/input_checker'
+require_relative '../../lib/ui/input_processor'
 
 describe TTTGameWriter do
   describe '#write_game' do
