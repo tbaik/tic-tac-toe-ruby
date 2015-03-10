@@ -5,8 +5,6 @@ require 'board/gameboard'
 require 'player/human/human_player'
 
 class TTTGameCreator
-  attr_reader :ui
-
   def initialize(ui)
     @ui = ui
   end

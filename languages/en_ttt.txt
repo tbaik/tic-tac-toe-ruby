@@ -11,3 +11,4 @@ winner_computer=The Computer won as
 winner_human=The Player won as 
 placed_computer=The Computer placed 
 placed_human=The Player placed 
+invalid_input=Invalid input! Try again.

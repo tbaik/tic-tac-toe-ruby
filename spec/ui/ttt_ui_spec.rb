@@ -140,6 +140,12 @@ describe TTTUI do
         expect(ui.io).to receive(:get_input).and_return("1")
         expect(ui.receive_read_or_new_game).to eq("1")
       end
+
+      it 'returns invalid input message until correct input' do
+        expect(ui.io).to receive(:print_message).exactly(3).times
+        expect(ui.io).to receive(:get_input).and_return("abcd", "1")
+        expect(ui.receive_read_or_new_game).to eq("1")
+      end
     end
 
     describe '#receive_read_file_name' do
@@ -147,24 +153,19 @@ describe TTTUI do
         file_name = "test1.txt"
         File.write(file_name, "nothing special")
         expect(ui.io).to receive(:print_message)
-        expect(ui.io).to receive(:get_input).and_return("test1.txt")
+        expect(ui.io).to receive(:get_input).and_return(file_name)
         expect(ui.receive_read_file_name).to eq(file_name)
         File.delete(file_name) if File.exist?(file_name)
       end
-    end
-  end
 
-  describe '#receive_input_with_checker' do
-    it 'prints given string, gets input, checks input, returns on valid gameboard size' do
-      expect(ui.io).to receive(:print_message)
-      expect(ui.io).to receive(:get_input).and_return("3")
-      expect(ui.receive_input_with_checker("ask_board_size", :valid_board_size?)).to eq("3")
-    end
-
-    it 'repeats if given invalid gameboard size' do
-      expect(ui.io).to receive(:print_message).exactly(2).times
-      expect(ui.io).to receive(:get_input).and_return("9","3")
-      expect(ui.receive_input_with_checker("ask_board_size", :valid_board_size?)).to eq("3")
+      it 'returns invalid input message and makes you try again if invalid' do
+        file_name = "test1.txt"
+        File.write(file_name, "nothing special")
+        expect(ui.io).to receive(:print_message).exactly(3).times
+        expect(ui.io).to receive(:get_input).and_return("nonexistant_file.txt", file_name)
+        expect(ui.receive_read_file_name).to eq(file_name)
+        File.delete(file_name) if File.exist?(file_name)
+      end
     end
   end
 

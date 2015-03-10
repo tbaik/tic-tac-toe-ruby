@@ -11,3 +11,4 @@ winner_computer=El ordenador ganó como
 winner_human=El jugador ganó como 
 placed_computer=El ordenador colocado 
 placed_human=El jugador colocado  
+invalid_input=Entrada no válida! Inténtalo de nuevo.
