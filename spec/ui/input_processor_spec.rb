@@ -1,4 +1,4 @@
-require_relative '../../lib/ui/input_processor'
+require 'ui/input_processor'
 
 describe InputProcessor do
   describe '#process_piece_and_turn_input' do

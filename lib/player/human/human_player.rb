@@ -1,5 +1,5 @@
-require_relative "../player"
-require_relative "../../readerwriter/ttt_game_writer"
+require "player/player"
+require "readerwriter/ttt_game_writer"
 
 class HumanPlayer < Player
 

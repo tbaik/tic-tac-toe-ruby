@@ -1,5 +1,3 @@
-require_relative '../ttt_game'
-
 class TTTGameReader 
   class << self
     def read_game(file_name)

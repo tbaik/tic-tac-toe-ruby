@@ -1,4 +1,4 @@
-require_relative "ttt_ai"
+require "player/ai/ttt_ai"
 
 class MediumAI < TTTAI
 	def initialize(piece)

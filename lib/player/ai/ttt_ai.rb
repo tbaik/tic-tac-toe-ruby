@@ -1,4 +1,4 @@
-require_relative "../player"
+require "player/player"
 
 class TTTAI < Player
   def initialize(piece)

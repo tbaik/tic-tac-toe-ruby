@@ -1,10 +1,9 @@
-require_relative "ttt_rules"
-require_relative "ttt_game"
-require_relative "ttt_game_creator"
-require_relative "ui/ttt_ui"
-require_relative "ui/consoleio"
-require_relative "ui/input_processor"
-require_relative "ui/input_checker"
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
+require "ttt_game_creator"
+require "ui/ttt_ui"
+require "ui/consoleio"
+require "ui/input_processor"
+require "ui/input_checker"
 
 module GameLoop
 	def self.run_ttt_loop

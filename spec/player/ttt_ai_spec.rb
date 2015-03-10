@@ -1,8 +1,11 @@
-require_relative '../../lib/player/ai/ttt_ai' 
-require_relative '../../lib/ttt_game' 
-require_relative '../../lib/ui/consoleio' 
-require_relative '../../lib/ui/input_checker'
-require_relative '../../lib/ui/input_processor'
+require 'ttt_rules'
+require 'ttt_game'
+require 'board/gameboard'
+require 'player/human/human_player'
+require 'ui/consoleio'
+require 'ui/input_checker'
+require 'ui/input_processor'
+require 'ui/ttt_ui'
 
 describe TTTAI do
   it 'is initialized with piece' do

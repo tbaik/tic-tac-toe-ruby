@@ -1,6 +1,5 @@
-require_relative "../board/board_presenter"
-require_relative "../readerwriter/ttt_game_writer"
-require_relative "output_determiner"
+require "board/board_presenter"
+require "ui/output_determiner"
 
 class TTTUI
   attr_reader :io, :input_processor, :input_checker, :text

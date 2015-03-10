@@ -1,5 +1,5 @@
-require_relative '../../lib/board/board_presenter'
-require_relative '../../lib/board/gameboard'
+require 'board/board_presenter'
+require 'board/gameboard'
 
 describe BoardPresenter do
   let(:board) {GameBoard.new(4).board}

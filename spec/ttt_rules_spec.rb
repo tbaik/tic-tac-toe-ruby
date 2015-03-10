@@ -1,5 +1,5 @@
-require_relative "../lib/ttt_rules"
-require_relative "../lib/board/gameboard"
+require "ttt_rules"
+require "board/gameboard"
 
 describe TTTRules do 
   describe '#is_valid_move' do 

@@ -1,12 +1,11 @@
-require_relative '../../lib/ui/consoleio'
-require_relative '../../lib/board/board_presenter'
-require_relative '../../lib/board/gameboard'
-require_relative '../../lib/ui/ttt_ui'
-require_relative '../../lib/ttt_game'
-require_relative '../../lib/ttt_rules'
-require_relative '../../lib/ui/pig_latin_translator'
-require_relative '../../lib/ui/input_checker'
-require_relative '../../lib/ui/input_processor'
+require 'ui/ttt_ui'
+require 'ui/consoleio'
+require 'board/gameboard'
+require 'player/human/human_player'
+require 'ttt_game'
+require 'ttt_rules'
+require 'ui/input_checker'
+require 'ui/input_processor'
 
 describe TTTUI do
   let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}

@@ -1,7 +1,7 @@
-require_relative '../player/ai/easy_ai'
-require_relative '../player/ai/medium_ai'
-require_relative '../player/ai/hard_ai'
-require_relative 'pig_latin_translator'
+require 'player/ai/easy_ai'
+require 'player/ai/medium_ai'
+require 'player/ai/hard_ai'
+require 'ui/pig_latin_translator'
 
 class InputProcessor
   class << self

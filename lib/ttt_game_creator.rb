@@ -1,7 +1,8 @@
-require_relative 'readerwriter/ttt_game_reader'
-require_relative 'ttt_rules'
-require_relative 'ttt_game'
-require_relative 'ui/pig_latin_translator'
+require 'readerwriter/ttt_game_reader'
+require 'ttt_rules'
+require 'ttt_game'
+require 'board/gameboard'
+require 'player/human/human_player'
 
 class TTTGameCreator
   attr_reader :ui

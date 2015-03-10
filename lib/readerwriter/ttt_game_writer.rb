@@ -1,5 +1,3 @@
-require_relative '../ttt_game'
-
 class TTTGameWriter
   class << self
     def save_game(game)

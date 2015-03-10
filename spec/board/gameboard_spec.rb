@@ -1,6 +1,6 @@
-require_relative "../../lib/ttt_game"
-require_relative "../../lib/ttt_rules"
-require_relative "../../lib/board/gameboard"
+require "ttt_game"
+require "ttt_rules"
+require "board/gameboard"
 
 describe GameBoard do
   it 'allows you to initialize with just gb_size' do

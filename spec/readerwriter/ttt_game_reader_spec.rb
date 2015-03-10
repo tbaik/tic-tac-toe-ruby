@@ -1,9 +1,13 @@
-require_relative '../../lib/readerwriter/ttt_game_reader'
-require_relative '../../lib/readerwriter/ttt_game_writer'
-require_relative '../../lib/ttt_game'
-require_relative '../../lib/ui/consoleio'
-require_relative '../../lib/ui/input_checker'
-require_relative '../../lib/ui/input_processor'
+require 'readerwriter/ttt_game_reader'
+require 'readerwriter/ttt_game_writer'
+require 'ttt_rules'
+require 'ttt_game'
+require 'board/gameboard'
+require 'player/human/human_player'
+require 'ui/consoleio'
+require 'ui/input_checker'
+require 'ui/input_processor'
+require 'ui/ttt_ui'
 
 describe TTTGameReader do
   describe '#read_game' do
