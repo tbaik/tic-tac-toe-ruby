@@ -3,7 +3,7 @@ require_relative "../readerwriter/ttt_game_writer"
 require_relative "output_determiner"
 
 class TTTUI
-  attr_reader :io, :input_processor, :input_checker, :text 
+  attr_reader :io, :input_processor, :input_checker, :text
   ASK_LANGUAGE = "Type 1 for English and 2 for Pig Latin, and 3 for Spanish!"
   END_OF_GAME = "\n--------------------------------------------------------------"
 
@@ -15,14 +15,8 @@ class TTTUI
   end
 
   def determine_language
-    @io.print_message(ASK_LANGUAGE)
-    choice = @io.get_input
-    if @input_checker.valid_language_input?(choice)
-       text_hash = @input_processor.process_language_input(choice)
-       @text = text_hash
-    else
-      determine_language
-    end
+    language_input = receive_input_with_checker(ASK_LANGUAGE, :valid_language_input?)
+    @text = @input_processor.process_language_input(language_input)
   end
 
   def receive_human_turn_choice
@@ -35,14 +29,7 @@ class TTTUI
   end
 
   def receive_save_file_name
-    @io.print_message(@text[:ask_file_name])
-    file_name = @io.get_input
-    if file_name != ""	
-      return file_name
-    else
-      @io.print_message(@text[:invalid_file_name])
-      receive_save_file_name
-    end
+    receive_input_with_checker_and_invalid_response(@text[:ask_file_name], :valid_file_name?, @text[:invalid_file_name])
   end
 
   def print_gameboard(board)
@@ -53,7 +40,7 @@ class TTTUI
     winner_symbol = OutputDeterminer.determine_winner_symbol(has_winner, game)
     winner_piece = game.is_player_turn ? game.computer_player.piece : game.human_player.piece
     winner_piece = "" if !has_winner
-    @io.print_message(@text[winner_symbol] + winner_piece + "!" + END_OF_GAME) 
+    @io.print_message(@text[winner_symbol] + winner_piece + "!" + END_OF_GAME)
   end
 
   def print_piece_placed(is_player_turn, piece, piece_location)
@@ -62,53 +49,54 @@ class TTTUI
   end
 
   def receive_board_size
-    @io.print_message(@text[:ask_board_size])
-    gb_size = @io.get_input
-    if @input_checker.valid_board_size?(gb_size) 
-      return gb_size
-    else
-      receive_board_size
-    end
+    receive_input_with_checker(@text[:ask_board_size], :valid_board_size?)
   end
 
   def receive_piece_and_turn
-    @io.print_message(@text[:ask_turn])
-    piece_and_turn = @input_processor.process_piece_and_turn_input(@io.get_input)
-    if !piece_and_turn.nil?	
-      return piece_and_turn
-    else
-      receive_piece_and_turn
-    end
+    receive_process_and_check_input(@text[:ask_turn], :process_piece_and_turn_input)
   end
 
   def receive_difficulty
-    @io.print_message(@text[:ask_difficulty])
-    difficulty = @input_processor.process_difficulty_input(@io.get_input)
-    if !difficulty.nil? 
-      return difficulty
-    else
-      receive_difficulty
-    end
+    receive_process_and_check_input(@text[:ask_difficulty], :process_difficulty_input)
   end
 
   def receive_read_or_new_game
-    @io.print_message(@text[:ask_read_or_new_game])
-    choice = @io.get_input
-    if @input_checker.valid_read_or_new_game_input?(choice) 
-      return choice
-    else
-      receive_read_or_new_game
-    end	
-  end	
+    receive_input_with_checker(@text[:ask_read_or_new_game], :valid_read_or_new_game_input?)
+  end
 
   def receive_read_file_name
-    @io.print_message(@text[:ask_file_name])
-    file_name = File.expand_path(("../../../" + @io.get_input), __FILE__)
-    if @input_checker.valid_file_name?(file_name) 
-      return file_name 
+    receive_input_with_checker_and_invalid_response(@text[:ask_file_name], :existing_file_name?, @text[:invalid_file_name])
+  end
+
+  def receive_input_with_checker(prompt_text, checker_method)
+    @io.print_message(prompt_text)
+    input = @io.get_input
+    if @input_checker.send(checker_method, input)
+      return input
     else
-      @io.print_message(@text[:invalid_file_name])
-      receive_read_file_name
+      receive_input_with_checker(prompt_text, checker_method)
     end
   end
+
+  def receive_process_and_check_input(prompt_text, processor_method)
+    @io.print_message(prompt_text)
+    processed_input = @input_processor.send(processor_method, @io.get_input)
+    if !processed_input.nil?
+      return processed_input
+    else
+      receive_process_and_check_input(prompt_text, processor_method)
+    end
+  end
+
+  def receive_input_with_checker_and_invalid_response(prompt_text, checker_method, invalid_text)
+    @io.print_message(prompt_text)
+    input = @io.get_input
+    if @input_checker.send(checker_method, input)
+      return input
+    else
+      @io.print_message(invalid_text)
+      receive_input_with_checker_and_invalid_response(prompt_text, checker_method, invalid_text)
+    end
+  end
+
 end

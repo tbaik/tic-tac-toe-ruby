@@ -43,15 +43,25 @@ describe InputChecker do
     end
   end
 
-  describe '#valid_file_name?' do
+  describe '#existing_file_name?' do
     it 'returns true if file exists' do
       File.write("existing_file.txt", "hi!")
-      expect(input_checker.valid_file_name?("existing_file.txt")).to eq(true)
+      expect(input_checker.existing_file_name?("existing_file.txt")).to eq(true)
       File.delete("existing_file.txt") if File.exist? "existing_file.txt"
     end
 
     it 'returns false if file does not exist' do
-     expect(input_checker.valid_file_name?("non_existant.txt")).to eq(false)
+     expect(input_checker.existing_file_name?("non_existant.txt")).to eq(false)
+    end
+  end
+
+  describe '#valid_file_name?' do
+    it 'returns false on empty string' do
+      expect(input_checker.valid_file_name?("")).to eq(false)
+    end
+
+    it 'returns true if string is not empty' do
+      expect(input_checker.valid_file_name?("hello")).to eq(true)
     end
   end
 end

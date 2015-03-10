@@ -3,6 +3,7 @@ require_relative '../../lib/board/board_presenter'
 require_relative '../../lib/board/gameboard'
 require_relative '../../lib/ui/ttt_ui'
 require_relative '../../lib/ttt_game'
+require_relative '../../lib/ttt_rules'
 require_relative '../../lib/ui/pig_latin_translator'
 require_relative '../../lib/ui/input_checker'
 require_relative '../../lib/ui/input_processor'
@@ -39,25 +40,25 @@ describe TTTUI do
 
   describe '#receive_save_file_name' do
     it 'prints message and gets input from with io' do
-      expect(ui.io).to receive(:print_message) 
-      expect(ui.io).to receive(:get_input).and_return("file") 
+      expect(ui.io).to receive(:print_message)
+      expect(ui.io).to receive(:get_input).and_return("file")
       file_name = ui.receive_save_file_name
       expect(file_name).to eq("file")
     end
 
     it 'does not allow blank file names' do
-      expect(ui.io).to receive(:print_message).exactly(3).times 
-      expect(ui.io).to receive(:get_input).and_return("", "file") 
+      expect(ui.io).to receive(:print_message).exactly(3).times
+      expect(ui.io).to receive(:get_input).and_return("", "file")
       ui.receive_save_file_name
     end
   end
 
   describe '#print_gameboard' do
     it 'prints the string from board presenter' do
-      board = GameBoard.new(3).board 
+      board = GameBoard.new(3).board
       expect(BoardPresenter).to receive(:board_string).with(board)
       expect(ui.io).to receive(:print_message)
-      ui.print_gameboard(board)   
+      ui.print_gameboard(board)
     end
   end
 
@@ -144,13 +145,55 @@ describe TTTUI do
 
     describe '#receive_read_file_name' do
       it 'returns file name if file exists' do
-        path = File.expand_path("../../../test1.txt", __FILE__)
-        File.write(path, "nothing special")
+        file_name = "test1.txt"
+        File.write(file_name, "nothing special")
         expect(ui.io).to receive(:print_message)
         expect(ui.io).to receive(:get_input).and_return("test1.txt")
-        expect(ui.receive_read_file_name).to eq(path)
-        File.delete(path) if File.exist?(path)
+        expect(ui.receive_read_file_name).to eq(file_name)
+        File.delete(file_name) if File.exist?(file_name)
       end
+    end
+  end
+
+  describe '#receive_input_with_checker' do
+    it 'prints given string, gets input, checks input, returns on valid gameboard size' do
+      expect(ui.io).to receive(:print_message)
+      expect(ui.io).to receive(:get_input).and_return("3")
+      expect(ui.receive_input_with_checker("ask_board_size", :valid_board_size?)).to eq("3")
+    end
+
+    it 'repeats if given invalid gameboard size' do
+      expect(ui.io).to receive(:print_message).exactly(2).times
+      expect(ui.io).to receive(:get_input).and_return("9","3")
+      expect(ui.receive_input_with_checker("ask_board_size", :valid_board_size?)).to eq("3")
+    end
+  end
+
+  describe '#receive_process_and_check_input' do
+    it 'prints given text, process input, check if it is nil and returns valid input' do
+      expect(ui.io).to receive(:print_message)
+      expect(ui.io).to receive(:get_input).and_return("1")
+      expect(ui.receive_process_and_check_input("ask_turn", :process_piece_and_turn_input)).to eq(["X",true])
+    end
+
+    it 'repeats if given invalid input' do
+      expect(ui.io).to receive(:print_message).exactly(2).times
+      expect(ui.io).to receive(:get_input).and_return("5", "1")
+      expect(ui.receive_process_and_check_input("ask_turn", :process_piece_and_turn_input)).to eq(["X",true])
+    end
+  end
+
+  describe '#receive_input_with_checker_and_invalid_response' do
+    it 'prints string, gets input, check input, return on valid input' do
+      expect(ui.io).to receive(:print_message)
+      expect(ui.io).to receive(:get_input).and_return("file.txt")
+      expect(ui.receive_input_with_checker_and_invalid_response("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
+    end
+
+    it 'repeats prompt text and also outputs invalid text response on invalid input' do
+      expect(ui.io).to receive(:print_message).exactly(3).times
+      expect(ui.io).to receive(:get_input).and_return("", "file.txt")
+      expect(ui.receive_input_with_checker_and_invalid_response("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
     end
   end
 end

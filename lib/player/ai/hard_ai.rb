@@ -1,4 +1,3 @@
-require_relative "../../ttt_rules"
 require_relative "ttt_ai"
 
 class HardAI < TTTAI

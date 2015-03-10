@@ -12,7 +12,9 @@ module TTTRules
     def has_winner(game_board)
       length = game_board.board_length.to_i
       return false if game_board.num_pieces < ((length * 2) - 1) 
-      has_vertical_winner(game_board.board, length) || has_horizontal_winner(game_board.board, length) || has_diagonal_winner(game_board.board, length)
+      has_vertical_winner(game_board.board, length) ||
+        has_horizontal_winner(game_board.board, length) ||
+        has_diagonal_winner(game_board.board, length)
     end
 
     def has_vertical_winner(board, length)
@@ -34,7 +36,8 @@ module TTTRules
     def has_diagonal_winner(board, length)
       left_diagonal_starting_space = 0
       right_diagonal_starting_space = length - 1
-      if diagonal_contains_same_pieces?(board, left_diagonal_starting_space, length+1) || diagonal_contains_same_pieces?(board, right_diagonal_starting_space, length-1)
+      if diagonal_contains_same_pieces?(board, left_diagonal_starting_space, length+1) ||
+        diagonal_contains_same_pieces?(board, right_diagonal_starting_space, length-1)
         return true
       end
       return false
@@ -75,7 +78,9 @@ module TTTRules
     def has_winner_eval(game_board)
       length = game_board.board_length.to_i
       return false if game_board.num_pieces < ((length * 2) - 2) 
-      has_vertical_winner(game_board.board, length) || has_horizontal_winner(game_board.board, length) || has_diagonal_winner(game_board.board, length)
+      has_vertical_winner(game_board.board, length) ||
+        has_horizontal_winner(game_board.board, length) ||
+        has_diagonal_winner(game_board.board, length)
     end
   end
 end
