@@ -53,18 +53,4 @@ describe InputProcessor do
       expect(hash[:winner_tie]).to eq("Es un empate")
     end
   end
-
-  describe '#parse_language_file' do
-    it 'parses each line and combines all hashes into one hash of all ui input' do
-      hash = InputProcessor.parse_language_file("languages/en_ttt.txt")
-      expect(hash[:winner_tie]).to eq("It's a tie")
-      expect(hash[:invalid_file_name]).to eq("Invalid file name!")
-    end
-  end
-
-  describe '#parse_hash_line' do
-    it 'creates a hash of symbol key and string value from one line of parsed string' do
-      expect(InputProcessor.parse_hash_line("test=random string!")).to eq({:test => "random string!"})
-    end
-  end
 end

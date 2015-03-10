@@ -2,6 +2,7 @@ require 'player/ai/easy_ai'
 require 'player/ai/medium_ai'
 require 'player/ai/hard_ai'
 require 'ui/pig_latin_translator'
+require 'parser/hash_file_parser'
 
 class InputProcessor
   class << self
@@ -34,31 +35,16 @@ class InputProcessor
     def process_language_input(input)
       case input
       when "1"
-        return parse_language_file(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
+        return HashFileParser.parse_file_to_hash(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
       when "2"
-        hash = parse_language_file(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
+        hash = HashFileParser.parse_file_to_hash(File.expand_path("../../../languages/en_ttt.txt", __FILE__))
         hash.each do |key,value|
           hash[key] = PigLatinTranslator.translate_string(value)
         end
         return hash
       when "3"
-        return parse_language_file(File.expand_path("../../../languages/sp_ttt.txt", __FILE__))
+        return HashFileParser.parse_file_to_hash(File.expand_path("../../../languages/sp_ttt.txt", __FILE__))
       end
-    end
-
-    def parse_language_file(file_name)
-      hash = {}
-      File.open(file_name) do |file|
-        while line = file.gets
-          hash = hash.merge(parse_hash_line(line)) 
-        end
-      end
-      return hash
-    end
-
-    def parse_hash_line(string_line) 
-      key_val = string_line.split("=")
-      return {key_val[0].to_sym => key_val[1].gsub("\n",'')} 
     end
   end
 end
