@@ -36,11 +36,8 @@ module TTTRules
     def has_diagonal_winner(board, length)
       left_diagonal_starting_space = 0
       right_diagonal_starting_space = length - 1
-      if diagonal_contains_same_pieces?(board, left_diagonal_starting_space, length+1) ||
+      return diagonal_contains_same_pieces?(board, left_diagonal_starting_space, length+1) ||
         diagonal_contains_same_pieces?(board, right_diagonal_starting_space, length-1)
-        return true
-      end
-      return false
     end
 
     def column_contains_same_pieces?(board, column_space, length)

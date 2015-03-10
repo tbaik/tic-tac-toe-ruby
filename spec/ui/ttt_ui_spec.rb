@@ -9,7 +9,6 @@ require 'ui/input_processor'
 
 describe TTTUI do
   let(:ui) {TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}
-  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}	
 
   it 'is initialized with an io' do
     expect{TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}.not_to raise_error
@@ -62,6 +61,7 @@ describe TTTUI do
   end
 
   describe '#print_winner' do
+  let(:game) {TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)}	
     it 'prints the string from the winner presenter' do
       expect{ui.print_winner(true,game)}.to output("The Computer won as X!\n--------------------------------------------------------------\n").to_stdout
     end
@@ -183,17 +183,17 @@ describe TTTUI do
     end
   end
 
-  describe '#receive_input_with_checker_and_invalid_response' do
+  describe '#receive_input_with_checker' do
     it 'prints string, gets input, check input, return on valid input' do
       expect(ui.io).to receive(:print_message)
       expect(ui.io).to receive(:get_input).and_return("file.txt")
-      expect(ui.receive_input_with_checker_and_invalid_response("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
+      expect(ui.receive_input_with_checker("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
     end
 
     it 'repeats prompt text and also outputs invalid text response on invalid input' do
       expect(ui.io).to receive(:print_message).exactly(3).times
       expect(ui.io).to receive(:get_input).and_return("", "file.txt")
-      expect(ui.receive_input_with_checker_and_invalid_response("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
+      expect(ui.receive_input_with_checker("ask file name", :valid_file_name?, "invalid input!")).to eq("file.txt")
     end
   end
 end
