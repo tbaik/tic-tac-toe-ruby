@@ -10,7 +10,7 @@ require 'ui/input_processor'
 require 'ui/ttt_ui'
 
 describe TTTGameReader do
-  describe '#read_game' do
+  xdescribe '#read_game' do
     it 'read file given a file_name and create game' do
       game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
       file_name = "test2.txt"
@@ -29,7 +29,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_game_board_variables' do 
+  xdescribe '#read_game_board_variables' do 
     it 'reads game board object string' do
       gb = GameBoard.new(4)
       gb_string = gb.inspect
@@ -40,7 +40,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_human_player_piece' do 
+  xdescribe '#read_human_player_piece' do 
     it 'reads human player object string and gives back piece' do 
       hp = HumanPlayer.new("X")
       hp_string = hp.inspect
@@ -49,7 +49,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_computer_player_class' do 
+  xdescribe '#read_computer_player_class' do 
     it 'reads computer player object string for EasyAI' do
       cp = EasyAI.new("X")
       cp_string = cp.inspect
@@ -58,7 +58,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_is_player_turn' do
+  xdescribe '#read_is_player_turn' do
     it 'reads game object for is_player_turn and returns boolean true if true' do
       game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
       string = game.inspect
@@ -66,7 +66,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_rules' do
+  xdescribe '#read_rules' do
     it 'reads TTTRules when given rule is TTTRules' do
       game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("O"), HardAI.new("X"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules)	
       string = game.inspect
@@ -74,7 +74,7 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_array_object' do
+  xdescribe '#read_array_object' do
     it 'reads string array object back into normal string array' do
       array = ["1","2","3","4","O","X","7","8","9","10"]
       string = array.inspect
@@ -88,17 +88,17 @@ describe TTTGameReader do
     end
   end
 
-  describe '#read_line_for_words' do
+  xdescribe '#read_line_for_words' do
     it 'gives back just the alphabet when looking at a line in a variable' do
       expect(TTTGameReader.read_line_for_words("io=helloIO\n")).to eq("helloIO")
     end 
-    
+
     it 'excludes numbers' do
       expect(TTTGameReader.read_line_for_words("io=12345io\n")).to eq("io")
     end
   end
 
-  describe '#read_class_name' do
+  xdescribe '#read_class_name' do
     it 'reads the name of the saved class' do 
       cp = HardAI.new("X")
       string = cp.inspect
@@ -106,4 +106,3 @@ describe TTTGameReader do
     end
   end
 end
-
