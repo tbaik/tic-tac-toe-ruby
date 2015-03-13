@@ -10,7 +10,7 @@ class TTTGameCreator
   end
 
   def new_game
-    @ui.determine_language
+    @ui.receive_and_set_language_choice
 
     choice = @ui.receive_read_or_new_game
     variables_hash = {}

@@ -14,10 +14,10 @@ describe TTTUI do
     expect{TTTUI.new(ConsoleIO, InputProcessor, InputChecker)}.not_to raise_error
   end
 
-  describe '#receive_language_choice' do
+  describe '#receive_and_set_language_choice' do
     it 'receives 1 for english and sets text as english' do
       expect(ui.io).to receive(:get_input).and_return("1")
-      expect{ui.receive_language_choice}.to output("Type 1 for English and 2 for Pig Latin, and 3 for Spanish!\n").to_stdout
+      expect{ui.receive_and_set_language_choice}.to output("Type 1 for English and 2 for Pig Latin, and 3 for Spanish!\n").to_stdout
       expect(ui.text[:invalid_file_name]).to eq("Invalid file name!")
     end
   end
