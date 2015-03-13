@@ -37,8 +37,7 @@ class SerializedObjectParser
       if value.start_with?(@@OBJECT_START_STRING)
         parse_object_into_hash(value.scan(@@KEY_VALUE_REGEX).flatten)
       elsif value.include?(@@OBJECT_START_STRING)
-        first_value = value.split(@@MULTIPLE_VALUE_DELIMITER, 2).first
-        return first_value
+        return value.split(@@MULTIPLE_VALUE_DELIMITER, 2).first
       else
         cleanup_and_return_value(value)
       end
