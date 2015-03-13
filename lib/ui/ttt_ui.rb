@@ -13,7 +13,7 @@ class TTTUI
     @text = @input_processor.process_language_input("1")
   end
 
-  def determine_language
+  def receive_language_choice
     language_input = receive_input_with_checker(ASK_LANGUAGE, :valid_language_input?, @text[:invalid_input])
     @text = @input_processor.process_language_input(language_input)
   end
