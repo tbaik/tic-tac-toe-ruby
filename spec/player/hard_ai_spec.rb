@@ -69,6 +69,27 @@ describe HardAI do
     end
   end
 
+  describe '#game_evaluation' do
+      new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules) #X is human, O is computer, X goes first
+    it 'returns 1 if no winner' do
+      has_winner = false
+      is_player_turn = true
+      expect(new_game.computer_player.game_evaluation(has_winner, is_player_turn)).to eq(1)
+    end
+
+    it 'returns 2 if has winner and is_player_turn' do
+      has_winner = true
+      is_player_turn = true
+      expect(new_game.computer_player.game_evaluation(has_winner, is_player_turn)).to eq(2)
+    end
+
+    it 'returns 0 if is not player turn and has winner' do
+      has_winner = true
+      is_player_turn = false
+      expect(new_game.computer_player.game_evaluation(has_winner, is_player_turn)).to eq(0)
+    end
+  end
+
   describe '#get_score' do
     it 'should get a score of 2 if game is winnable with this move' do
       new_game = TTTGame.new(GameBoard.new(3), HumanPlayer.new("X"), HardAI.new("O"), TTTUI.new(ConsoleIO, InputProcessor, InputChecker), true, TTTRules) #X is human, O is computer, X goes first
@@ -90,5 +111,5 @@ describe HardAI do
       expect(new_game.computer_player.get_score(new_game, 2, "O")).to eq(0)
     end
   end
-end
+ end
 

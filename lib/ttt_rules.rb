@@ -17,6 +17,14 @@ module TTTRules
         has_diagonal_winner(game_board.board, length)
     end
 
+    def game_over?(game_board)
+      return has_winner(game_board) || full_board?(game_board)
+    end
+
+    def full_board?(game_board)
+      return game_board.num_pieces == game_board.board.size
+    end
+
     def has_vertical_winner(board, length)
       length.times do |column_start_space|
         return true if column_contains_same_pieces?(board, column_start_space, length) 

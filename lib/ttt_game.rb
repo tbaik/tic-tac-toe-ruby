@@ -4,14 +4,14 @@ class TTTGame
 	def initialize(game_board, human_player, computer_player, ui, is_player_turn, rules)
 		@game_board = game_board
 		@human_player = human_player
-    @computer_player = computer_player 
+    @computer_player = computer_player
     @ui = ui
     @is_player_turn = is_player_turn
     decide_current_player
     @rules = rules
   end
 
-  def play  
+  def play
     has_winner = false
     @ui.print_gameboard(@game_board.board)
 

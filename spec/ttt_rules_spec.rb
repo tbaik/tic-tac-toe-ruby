@@ -33,9 +33,20 @@ describe TTTRules do
     end
   end
 
+  describe '#full_board?' do
+    let(:gameboard) {GameBoard.new(1)}
+    it 'returns true if board has same # of placed pieces as size' do
+      gameboard.place_piece(1,"O")
+      expect(TTTRules.full_board?(gameboard)).to eq(true)
+    end
+
+    it 'returns false if board has less than full' do
+      expect(TTTRules.full_board?(gameboard)).to eq(false)
+    end
+  end
+
   describe 'checking for winners 3x3' do 
     let(:gameboard) {GameBoard.new(3)}
-
     it 'should have horizontal winners row 1' do 
       gameboard.place_piece(1,"O")
       gameboard.place_piece(2,"O")
